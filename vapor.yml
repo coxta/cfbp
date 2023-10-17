@@ -1,0 +1,22 @@
+id: 52770
+name: cfbp
+environments:
+    production:
+        memory: 2048
+        cli-memory: 1024
+        timeout: 300
+        queue-timeout: 600
+        database: cfbp-db
+        scheduler: false
+        runtime: 'php-8.2:al2'
+        domain: 'cfbpickem.net'
+        # cache: cfbp-redis
+        build:
+            - 'composer install --no-dev'
+            - "php artisan event:cache"
+            - 'npm ci && npm run build && rm -rf node_modules'
+        deploy:
+            - "php artisan migrate --force"
+        queues:
+            - production
+          
