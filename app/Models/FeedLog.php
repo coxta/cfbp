@@ -3,16 +3,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use App\Models\Traits\Uuid;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class FeedLog extends Model
 {
-    use Uuid;
-
-    protected $primaryKey = 'id';
-    public $keyType = 'string';
-    public $incrementing = false;
+    use HasUuids;
 
     protected $fillable = [
         'feed_id',

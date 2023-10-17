@@ -2,17 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Uuid;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
 
-    use Uuid;
-
-    protected $primaryKey = 'id';
-    public $keyType = 'string';
-    public $incrementing = false;
+    use HasUuids;
 
     protected $fillable = [
         'espn_id',

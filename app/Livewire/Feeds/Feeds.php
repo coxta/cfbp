@@ -28,8 +28,7 @@ class Feeds extends Component
     public function render()
     {
         $this->feeds = Feed::all();
-        return view('livewire.feeds.feeds');
-        // ddd('Hello render');        
+        return view('livewire.feeds.feeds'); 
     }
 
     public function save()
