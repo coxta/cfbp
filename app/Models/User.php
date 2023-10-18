@@ -12,13 +12,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     use HasUuids, Notifiable;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'teams',
-        'admin'
-    ];
+    protected $guarded = [];
 
     protected $hidden = [
         'password',
