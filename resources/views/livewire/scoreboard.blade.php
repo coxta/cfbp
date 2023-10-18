@@ -11,11 +11,11 @@
         </div>
 
         <div class="flex flex-row flex-grow sm:flex-grow-0 items-end space-x-4">
-            <div class="flex flex-grow sm:flex-grow-0">
-                @unless($this->week == $this->current && $this->conference == 'top')
+            @unless($this->week == $this->current && $this->conference == 'top')
+                <div class="flex flex-grow sm:flex-grow-0">
                     <x-button action="defaults" icon="arrow-path" color="blue" flat>Reset</x-button>
-                @endunless
-            </div>
+                </div>
+            @endunless
             <div class="flex flex-grow sm:flex-grow-0">
                 <x-input.select wire:model.live="week" :options="$weeks" />
             </div>
