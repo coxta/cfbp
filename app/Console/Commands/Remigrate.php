@@ -85,8 +85,8 @@ class Remigrate extends Command
         /**
          * Rollback and re-run the migrations
          */
-        $this->call('migrate:reset');
-        $this->call('migrate');
+        $this->call('migrate:reset --force');
+        $this->call('migrate --force');
         
         /**
          * Restore Users
