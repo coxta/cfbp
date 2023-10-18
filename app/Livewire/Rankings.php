@@ -2,16 +2,25 @@
 
 namespace App\Livewire;
 
+use App\Http\Controllers\RankingsController;
+use Carbon\Carbon;
 use App\Models\Week;
 use App\Models\Ranking;
 use Livewire\Component;
+use Livewire\Attributes\Url;
 
 class Rankings extends Component
 {
 
+    #[Url(as: 'period', keep:true, history: true)]
     public $week;
+
+    #[Url(keep: true, history: true)] 
+    public $poll;
+
+    public $current;
+    public $defaultPoll;
     public $weeks = [];
-    public $poll = 'ap';
     public $polls = [];
 
     public function mount()
@@ -22,7 +31,12 @@ class Rankings extends Component
     public function render()
     {
 
-        $period = Week::find($this->week)->name;
+        $data = Week::find($this->week);
+
+        $period = [
+            'name' => $data->name,
+            'dates' => Carbon::parse($data->start_date)->format('M j') . ' - ' . Carbon::parse($data->end_date)->format('M j')
+        ];
 
         $ranks = Ranking::where('poll', $this->poll)
             ->where('week_id', $this->week)
@@ -43,14 +57,24 @@ class Rankings extends Component
         ]);
     }
 
+    public function defaults()
+    {
+        $this->week = $this->current;
+        $this->poll = $this->defaultPoll;
+    }
+
     public function setFilters()
     {
 
-        $this->week = Week::where('name', 'like', 'Week%')
-                    ->where('start_date', '<', now())
-                    ->latest('start_date')
-                    ->first()
-                    ->id;
+        $this->current = Week::whereDate('start_date', '<=', now())->whereDate('end_date', '>=', now())->first()->id;
+        if(!isset($this->week)) {
+            $this->week = $this->current;
+        }
+
+        $this->defaultPoll = RankingsController::defaultPoll();
+        if(!isset($this->poll)) {
+            $this->poll = $this->defaultPoll;
+        }
 
         // Load weeks for the current season
         $weeks = Week::whereHas('calendar', function ($calendar) {
@@ -67,18 +91,20 @@ class Rankings extends Component
             ]);
         }
 
-        array_push($this->polls, [
-            'name' => 'CFP Rankings',
-            'value' => 'cfp'
-        ]);
+        if($this->defaultPoll == 'cfp') {
+            array_push($this->polls, [
+                'name' => 'CFP',
+                'value' => 'cfp'
+            ]);
+        }
 
         array_push($this->polls, [
-            'name' => 'AP Poll',
+            'name' => 'AP',
             'value' => 'ap'
         ]);
 
         array_push($this->polls, [
-            'name' => 'Coaches Poll',
+            'name' => 'Coaches',
             'value' => 'coaches'
         ]);
     }

@@ -6,14 +6,23 @@
 
     <div class="flex items-end justify-between">
 
-        <div class="flex text-gray-600 tracking-wide font-bold text-xl">
-            {{ $poll == 'ap' ? 'AP Poll' : 'Coaches Poll' }} - {{ $period }}</div>
+        <div class="hidden sm:flex items-baseline space-x-4">
+            <div class="flex text-2xl font-semibold tracking-wider text-gray-600">
+                {{ $poll == 'cfp' ? 'CFP' : ($poll == 'ap' ? 'AP' : 'Coaches') . ' - ' . $period['name'] }}
+            </div>
+            <div class="flex text-gray-500">{{ $period['dates'] }}</div>
+        </div>
 
-        <div class="flex flex-row items-center space-x-4">
-            <div class="flex">
+        <div class="flex flex-row flex-grow sm:flex-grow-0 items-end space-x-4">
+            @unless($this->week == $this->current && $this->poll == $this->defaultPoll)
+                <div class="flex flex-grow sm:flex-grow-0">
+                    <x-button action="defaults" icon="arrow-path" color="blue" flat>Reset</x-button>
+                </div>
+            @endunless
+            <div class="flex flex-grow sm:flex-grow-0">
                 <x-input.select wire:model.live="poll" :options="$polls" />
             </div>
-            <div class="flex">
+            <div class="flex flex-grow sm:flex-grow-0">
                 <x-input.select wire:model.live="week" :options="$weeks" />
             </div>
         </div>
