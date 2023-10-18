@@ -10,7 +10,12 @@
             <div class="flex text-gray-500">{{ $period['dates'] }}</div>
         </div>
 
-        <div class="flex flex-row flex-grow sm:flex-grow-0 items-center space-x-4">
+        <div class="flex flex-row flex-grow sm:flex-grow-0 items-end space-x-4">
+            <div class="flex flex-grow sm:flex-grow-0">
+                @unless($this->week == $this->current && $this->conference == 'top')
+                    <x-button action="defaults" icon="arrow-path" color="blue" flat>Reset</x-button>
+                @endunless
+            </div>
             <div class="flex flex-grow sm:flex-grow-0">
                 <x-input.select wire:model.live="week" :options="$weeks" />
             </div>

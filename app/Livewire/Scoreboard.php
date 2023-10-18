@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\Attributes\Url;
 
 use App\Models\Week;
 use App\Models\Conference;
@@ -11,9 +12,15 @@ use App\Models\Conference;
 class Scoreboard extends Component
 {
 
+    #[Url(as: 'period', keep:true, history: true)]
     public $week;
-    public $weeks = [];
+
+    #[Url(as: 'scope', keep: true, history: true)] 
     public $conference = 'top';
+
+    public $current;
+
+    public $weeks = [];
     public $conferences = [];
 
     public function mount()
@@ -21,7 +28,7 @@ class Scoreboard extends Component
         $this->setFilters();
     }
 
-public function render()
+    public function render()
     {
 
         $data = Week::with('calendar', 'games')->find($this->week);
@@ -71,10 +78,19 @@ public function render()
         ]);
     }
 
+    public function defaults()
+    {
+        $this->week = $this->current;
+        $this->conference = 'top';
+    }
+
     public function setFilters()
     {
 
-        $this->week = Week::whereDate('start_date', '<=', now())->whereDate('end_date', '>=', now())->first()->id;
+        $this->current = Week::whereDate('start_date', '<=', now())->whereDate('end_date', '>=', now())->first()->id;
+        if(!isset($this->week)) {
+            $this->week = $this->current;
+        }
 
         // Load weeks for the current season
         $weeks = Week::whereHas('calendar', function ($calendar) {
