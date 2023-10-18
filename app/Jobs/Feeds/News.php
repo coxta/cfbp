@@ -136,7 +136,7 @@ class News implements ShouldQueue
                                 [
                                     'article_type' => $article['type'] ?? null,
                                     'link' => $article['links']['web']['href'] ?? null,
-                                            'image' => $image,
+                                    'image' => $image,
                                     'game_id' => $article['gameId'] ?? null,
                                     'headline' => $article['headline'] ?? null,
                                     'description' => $article['description'] ?? null,
