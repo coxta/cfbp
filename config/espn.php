@@ -2,13 +2,14 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | ESPN API Endpoints
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * Current Season
+     */
     'season' => 2023,
 
+    /**
+     * API Endpoints
+     */
     'games' => 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000',
     'conferences' => 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard/conferences?limit=1000&groups=80,81,57,58,35,99',
     'divisions' => 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard/conferences?groups=',
@@ -19,4 +20,5 @@ return [
     'rankings' => 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/rankings',
     'news' => 'http://site.api.espn.com/apis/site/v2/sports/football/college-football/news?limit=1000',
     'team-news' => 'http://site.api.espn.com/apis/site/v2/sports/football/college-football/news?limit=1000&team=',
+
 ];
