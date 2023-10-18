@@ -14,7 +14,18 @@ class Network extends Component
      */
     public function __construct($game, $size = '2')
     {
-        $this->network = $game->broadcasts[0]['names'][0] ?? 'unk';
+        
+        $network = $game->broadcasts[0]['names'][0] ?? '';
+
+        switch ($network) {
+            case 'CW NETWORK':
+                $this->network = 'CW';
+                break;
+            default:
+                $this->network = $network;
+                break;
+        }
+
         $this->size = $size;
     }
 

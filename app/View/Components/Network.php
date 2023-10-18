@@ -14,7 +14,16 @@ public $network, $size;
      */
     public function __construct($network, $size = 3)
     {
-        $this->network = $network;
+
+        switch ($network) {
+            case 'CW NETWORK':
+                $this->network = 'CW';
+                break;
+            default:
+                $this->network = $network;
+                break;
+        }
+
         $this->size = $size;
     }
 
