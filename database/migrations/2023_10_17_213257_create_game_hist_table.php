@@ -23,8 +23,10 @@ return new class extends Migration
             // Odds
             $table->string('odds', 20)->nullable();
             $table->unsignedMediumInteger('favorite_team')->nullable();
-            $table->tinyInteger('spread')->nullable();
-            $table->unsignedTinyInteger('over_under')->nullable();
+            $table->float('spread', 4, 1)->nullable();
+            $table->float('over_under', 4, 1)->nullable();
+            $table->float('away_prob', 4, 1)->nullable();
+            $table->float('home_prob', 4, 1)->nullable();
 
             // Scores
             $table->unsignedTinyInteger('away_score')->default(0);

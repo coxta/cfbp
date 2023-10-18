@@ -134,6 +134,18 @@ class Games implements ShouldQueue
                     $over_under = $g['odds'][0]['overUnder'];
                 }
 
+                $gameReq = config('espn.game') . $game['id'];
+                $gameRes = Http::get($gameReq);
+                $predictor = $gameRes->json()['predictor'] ?? null;
+    
+                $away_prob = null;
+                $home_prob = null;
+
+                if($predictor){
+                    $away_prob = $predictor['awayTeam']['gameProjection'] ?? null;
+                    $home_prob = $predictor['homeTeam']['gameProjection'] ?? null;
+                };
+
                 $model = Game::updateOrCreate(
                     ['id' => $game['id']],
                     [
@@ -154,11 +166,13 @@ class Games implements ShouldQueue
                         'home_score' => $home_score,
                         'home_lines' => $home_lines,
                         'home_records' => $home_records,
+                        'home_prob' => $home_prob,
                         'away_team' => $away_team,
                         'away_rank' => $away_rank,
                         'away_score' => $away_score,
                         'away_lines' => $away_lines,
                         'away_records' => $away_records,
+                        'away_prob' => $away_prob,
                         'odds' => $odds,
                         'favorite_team' => $favorite,
                         'spread' => $spread,
@@ -183,6 +197,8 @@ class Games implements ShouldQueue
                     $snapshot->favorite_team = $favorite;
                     $snapshot->spread = $spread;
                     $snapshot->over_under = $over_under;
+                    $snapshot->away_prob = $away_prob;
+                    $snapshot->home_prob = $home_prob;
                     $snapshot->away_score = $away_score;
                     $snapshot->home_score = $home_score;
                     $snapshot->save();

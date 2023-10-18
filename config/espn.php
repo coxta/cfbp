@@ -11,6 +11,7 @@ return [
      * API Endpoints
      */
     'games' => 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000',
+    'game' => 'http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=',
     'conferences' => 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard/conferences?limit=1000&groups=80,81,57,58,35,99',
     'divisions' => 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard/conferences?groups=',
     'teams' => 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams?limit=1000',

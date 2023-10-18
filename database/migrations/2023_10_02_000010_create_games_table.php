@@ -39,18 +39,20 @@ class CreateGamesTable extends Migration
             $table->unsignedTinyInteger('home_score')->default(0);
             $table->json('home_lines')->nullable();
             $table->json('home_records')->nullable();
+            $table->float('home_prob', 4, 1)->nullable();
 
             $table->unsignedMediumInteger('away_team')->nullable();
             $table->unsignedTinyInteger('away_rank')->default(99);
             $table->unsignedTinyInteger('away_score')->default(0);
             $table->json('away_lines')->nullable();
             $table->json('away_records')->nullable();
+            $table->float('away_prob', 4, 1)->nullable();
 
             // Odds
             $table->string('odds', 20)->nullable();
             $table->unsignedMediumInteger('favorite_team')->nullable();
-            $table->tinyInteger('spread')->nullable();
-            $table->unsignedTinyInteger('over_under')->nullable();
+            $table->float('spread', 4, 1)->nullable();
+            $table->float('over_under', 4, 1)->nullable();
 
             // JSONs (Easier for unpredictable meta)
             $table->json('teams');
