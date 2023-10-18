@@ -5,7 +5,7 @@ namespace App\Jobs\Feeds;
 use Carbon\Carbon;
 
 use App\Models\Game;
-use App\Models\GameSnapshot;
+use App\Models\GameHist;
 use App\Models\Team;
 
 use Illuminate\Support\Str;
@@ -90,6 +90,7 @@ class Games implements ShouldQueue
             }
 
             $spread = null;
+            $over_under = null;
             $favorite = null;
             $odds = null;
 
@@ -108,7 +109,11 @@ class Games implements ShouldQueue
                 }
             }
 
-            $live = Game::updateOrCreate(
+            if (isset($g['odds'][0]['overUnder'])) {
+                $over_under = $g['odds'][0]['overUnder'];
+            }
+
+            $model = Game::updateOrCreate(
                 ['id' => $game['id']],
                 [
                     'name' => $game['name'],
@@ -136,6 +141,7 @@ class Games implements ShouldQueue
                     'odds' => $odds,
                     'favorite_team' => $favorite,
                     'spread' => $spread,
+                    'over_under' => $over_under,
                     'status' => $game['status']['type']['name'],
                     'status_desc' => $game['status']['type']['description'],
                     'status_detail' => $game['status']['type']['detail'],
@@ -147,71 +153,20 @@ class Games implements ShouldQueue
                 ]
             );
 
-            // $snap = false;
+            // Game Hist
+            $snapshot = new GameHist;
 
-            // if (!$game['status']['type']['completed']) {
+            $snapshot->game_id = $game['id'];
+            $snapshot->status = $game['status']['type']['description'];
+            $snapshot->odds = $odds;
+            $snapshot->favorite_team = $favorite;
+            $snapshot->spread = $spread;
+            $snapshot->over_under = $over_under;
+            $snapshot->away_score = $away_score;
+            $snapshot->home_score = $home_score;
 
-            //     if ($game['status']['type']['description'] != 'Scheduled') {
-            //         // game is in progress, take a snapshot
-            //         $snap = true;
-            //     } else {
+            $snapshot->save();
 
-            //         $last = GameSnapshot::where('game_id', $game['id'])->where('snapshot_timestamp', '>', date('Y-m-d'))->get();
-
-            //         if (count($last) > 0) {
-            //             $snap = false;
-            //         } else {
-            //             $snap = true;
-            //         }
-            //     }
-
-            //     if ($snap) {
-            //         try {
-            //             $snapshot = GameSnapshot::create(
-            //                 [
-            //                     'id' => $game['id'],
-            //                     'snapshot_id' => $snapshot_id,
-            //                     'snapshot_timestamp' => $snapshot_timestamp,
-            //                     'name' => $game['name'],
-            //                     'start_date' => $start_date,
-            //                     'short_name' => $game['shortName'],
-            //                     'game_type' => $g['type']['abbreviation'],
-            //                     'game_type_id' => $g['type']['id'],
-            //                     'venue' => $g['venue'] ?? null,
-            //                     'attendance' => $g['attendance'] ?? 0,
-            //                     'notes' => $g['notes'] ?? null,
-            //                     'situation' => $g['situation'] ?? null,
-            //                     'leaders' => $g['leaders'] ?? null,
-            //                     'broadcasts' => $g['broadcasts'] ?? null,
-            //                     'teams' => $teams,
-            //                     'home_team' => $home_team,
-            //                     'home_rank' => $home_rank,
-            //                     'home_score' => $home_score,
-            //                     'home_lines' => $home_lines,
-            //                     'home_records' => $home_records,
-            //                     'away_team' => $away_team,
-            //                     'away_rank' => $away_rank,
-            //                     'away_score' => $away_score,
-            //                     'away_lines' => $away_lines,
-            //                     'away_records' => $away_records,
-            //                     'odds' => $odds,
-            //                     'favorite_team' => $favorite,
-            //                     'spread' => $spread,
-            //                     'status' => $game['status']['type']['name'],
-            //                     'status_desc' => $game['status']['type']['description'],
-            //                     'status_detail' => $game['status']['type']['detail'],
-            //                     'status_detail_short' => $game['status']['type']['shortDetail'],
-            //                     'clock' => $game['status']['clock'],
-            //                     'clock_display' => $game['status']['displayClock'],
-            //                     'period' => $game['status']['period'],
-            //                     'completed' => $game['status']['type']['completed']
-            //                 ]
-            //             );
-            //         } catch (\Throwable $th) {
-            //             //throw $th;
-            //         }
-            //     }
-            // }
         }
 
         FeedController::finished($this->log);

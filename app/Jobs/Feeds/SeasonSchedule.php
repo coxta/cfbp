@@ -26,7 +26,7 @@ class SeasonSchedule implements ShouldQueue
     private $log;
 
     public $tries = 1;
-    public $timeout = 600; // Ten minutes
+    public $timeout = 1200; // Ten minutes
 
     /**
      * Create a new job instance.
@@ -111,6 +111,7 @@ class SeasonSchedule implements ShouldQueue
                         }
 
                         $spread = null;
+                        $over_under = null;
                         $favorite = null;
                         $odds = null;
 
@@ -127,6 +128,10 @@ class SeasonSchedule implements ShouldQueue
                                     $spread = $fav[1];
                                 }
                             }
+                        }
+
+                        if (isset($g['odds'][0]['overUnder'])) {
+                            $over_under = $g['odds'][0]['overUnder'];
                         }
 
                         $record = Game::updateOrCreate(
@@ -157,6 +162,7 @@ class SeasonSchedule implements ShouldQueue
                                 'odds'  => $odds,
                                 'favorite_team' => $favorite,
                                 'spread' => $spread,
+                                'over_under' => $over_under,
                                 'status' => $game['status']['type']['name'],
                                 'status_desc' => $game['status']['type']['description'],
                                 'status_detail' => $game['status']['type']['detail'],
