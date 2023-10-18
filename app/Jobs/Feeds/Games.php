@@ -175,18 +175,18 @@ class Games implements ShouldQueue
                 );
 
                 // Game Hist
-                $snapshot = new GameHist;
-
-                $snapshot->game_id = $game['id'];
-                $snapshot->status = $game['status']['type']['description'];
-                $snapshot->odds = $odds;
-                $snapshot->favorite_team = $favorite;
-                $snapshot->spread = $spread;
-                $snapshot->over_under = $over_under;
-                $snapshot->away_score = $away_score;
-                $snapshot->home_score = $home_score;
-
-                $snapshot->save();
+                if($game['status']['type']['description'] != 'Final') {
+                    $snapshot = new GameHist;
+                    $snapshot->game_id = $game['id'];
+                    $snapshot->status = $game['status']['type']['description'];
+                    $snapshot->odds = $odds;
+                    $snapshot->favorite_team = $favorite;
+                    $snapshot->spread = $spread;
+                    $snapshot->over_under = $over_under;
+                    $snapshot->away_score = $away_score;
+                    $snapshot->home_score = $home_score;
+                    $snapshot->save();
+                }
 
             }
 
