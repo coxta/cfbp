@@ -21,13 +21,13 @@
                 </div>
 
                 @if(isset($game->away_records))
-                    <div class=" text-sm text-gray-600 p-0 font-light">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600 p-0 font-light">
                         @foreach ($game->away_records as $rec)
                             @if ($rec['type'] == 'total')
-                                {{ '(' . $rec['summary'] }}
+                                <div class="flex">{{ $rec['summary'] }}</div>
                             @endif
                             @if ($rec['type'] == 'vsconf')
-                                {{ ', ' . $rec['summary'] . ' ' . $game->awayConference->abbr . ')' }}
+                                <div class="hidden md:flex">({{ $rec['summary'] }})</div>
                             @endif
                         @endforeach
                     </div>
@@ -104,13 +104,13 @@
                 </div>
 
                 @if(isset($game->home_records))
-                    <div class=" text-sm text-gray-600 p-0 font-light">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600 p-0 font-light">
                         @foreach ($game->home_records as $rec)
                             @if ($rec['type'] == 'total')
-                                {{ '(' . $rec['summary'] }}
+                                <div class="flex">{{ $rec['summary'] }}</div>
                             @endif
                             @if ($rec['type'] == 'vsconf')
-                                {{ ', ' . $rec['summary'] . ' ' . $game->homeConference->abbr . ')' }}
+                                <div class="hidden md:flex">({{ $rec['summary'] }})</div>
                             @endif
                         @endforeach
                     </div>
