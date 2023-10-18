@@ -28,6 +28,123 @@
 
     <!-- games -->
     <div class="my-4">
+
+        @if(count($myGames) > 0)
+            <ul>
+            @foreach ($myGames as $myGame)
+                @php
+                    $branded = 'border-left: solid 5px #';
+                    $branded .= in_array($myGame->home_team, auth()->user()->teams ?? []) ? $myGame->homeTeam->color ?? '64748b' : $myGame->awayTeam->color ?? '64748b';
+                @endphp
+                <li 
+                    wire:click="viewGame('{{ $myGame->id }}')" 
+                    class="mb-2 my-{{ $myGame->notes ? '8' : '2' }} bg-white rounded-md shadow-md hover:shadow-xl relative cursor-pointer hover:bg-gray-50"
+                    style="{{ $branded }}">
+
+                    @if ($myGame->notes)
+                        <p class="absolute -top-5 text-gray-500 text-xs pl-1">
+                            {{ $myGame->notes[0]['headline'] }}</p>
+                    @endif
+
+                    <div class="flex justify-between space-x-4 py-3 px-2">
+                        <div class="{{ $myGame->status_desc == 'Scheduled' ? 'w-2/3 border-r' : 'w-full md:border-r' }} border-gray-200 md:w-1/3 pl-2 pr-4 space-y-2">
+                            <div class="flex items-baseline justify-between">
+                                <p class="text-xs text-gray-500 font-semibold">{{ $myGame->status_detail_short }}</p>
+                                @unless($myGame->completed)
+                                    <x-game.network :game="$myGame" />
+                                @endunless
+                            </div>
+                            <div class="flex flex-col items-start space-y-2">
+                                <x-game.away-team :game="$myGame" />
+                                <x-game.home-team :game="$myGame" />
+                            </div>
+                        </div>
+                        <div class="hidden md:flex items-center w-1/3 pl-4">
+                            @if ($myGame->status_desc == 'Scheduled')
+                                <div class="flex flex-col text-gray-500 space-y-2">
+                                    <p class="truncate font-medium tracking-tighter">{{ $myGame->venue['fullName'] }}
+                                    </p>
+                                    <p class="text-sm font-normal">
+                                        {{ $myGame->venue['address']['city'] . ', ' . $myGame->venue['address']['state'] }}
+                                    </p>
+                                </div>
+                            @else
+                                <div class="flex flex-col divide-y divide-gray-200">
+
+                                    <!-- Box Score -->
+                                    <table class="min-w-full ">
+                                        <thead class="">
+                                            <tr>
+                                                <th scope="col"
+                                                    class="px-3 py-1.5 text-left font-bold text-gray-600 text-xs uppercase tracking-wider">
+                                                    1
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-3 py-1.5 text-left font-bold text-gray-600 text-xs uppercase tracking-wider">
+                                                    2
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-3 py-1.5 text-left font-bold text-gray-600 text-xs uppercase tracking-wider">
+                                                    3
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-3 py-1.5 text-left font-bold text-gray-600 text-xs uppercase tracking-wider">
+                                                    4
+                                                </th>
+                                                @if (count($myGame->home_lines) > 4)
+                                                    <th scope="col"
+                                                        class="px-3 py-1.5 text-left font-bold text-gray-600 text-xs uppercase tracking-wider">
+                                                        OT
+                                                    </th>
+                                                    @for ($p = 2; $p <= count($myGame->home_lines) - 4; $p++)
+                                                        <th scope="col"
+                                                            class="px-3 py-1.5 text-left font-bold text-gray-600 text-xs uppercase tracking-wider">
+                                                            {{ $p . 'OT' }}
+                                                        </th>
+                                                    @endfor
+                                                @endif
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                @foreach ($myGame->away_lines as $aline)
+                                                    <td scope="col"
+                                                        class="px-3 py-1.5 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                                                        {{ $aline['value'] }}
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                            <tr>
+                                                @foreach ($myGame->home_lines as $hline)
+                                                    <td scope="col"
+                                                        class="px-3 py-1.5 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                                                        {{ $hline['value'] }}
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="flex items-center pr-4 md:pr-8 w-1/3 {{ $myGame->status_desc != 'Scheduled' ? 'hidden md:flex' : '' }}">
+                            <div class="flex flex-col text-gray-500 w-full items-end space-x-2">
+                                @if ($myGame->status_desc == 'Scheduled')
+                                    <x-game.odds :game="$myGame" />
+                                @else
+                                    <x-game.leaders :game="$myGame" />
+                                @endif
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            @endforeach
+            <ul>
+        @endif
+
         @foreach ($dates as $date)
 
             <div class="flex items-center my-3 space-x-4">

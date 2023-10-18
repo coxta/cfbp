@@ -31,7 +31,9 @@ class Scoreboard extends Component
     public function render()
     {
 
-        $data = Week::with('calendar', 'games')->find($this->week);
+        $data = Week::with('calendar', 'games', 'myGames')->find($this->week);
+
+        // ddd($data->myGames);
 
         $period = [
             'name' => $data->name,
@@ -39,6 +41,24 @@ class Scoreboard extends Component
         ];
 
         $dates = [];
+        $myGames = [];
+
+        foreach ($data->myGames as $myGame) {
+
+            if ($this->conference == 'top' && ($myGame->home_rank <= 25 || $myGame->away_rank <= 25)) {
+                
+                array_push($myGames, $myGame);
+
+            } else if (
+                $this->conference == 'all'
+                || ( $myGame->awayConference && $myGame->awayConference->id == $this->conference )
+                || ( $myGame->homeConference && $myGame->homeConference->id == $this->conference )
+                ) {
+
+                array_push($myGames, $myGame);
+                
+            }
+        }
 
         foreach ($data->games as $game) {
 
@@ -71,11 +91,12 @@ class Scoreboard extends Component
             }
         }
 
-        // ddd($dates);
         return view('livewire.scoreboard', [
             'period' => $period,
+            'myGames' => $myGames,
             'dates' => $dates
         ]);
+
     }
 
     public function defaults()

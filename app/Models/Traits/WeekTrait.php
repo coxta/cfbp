@@ -17,4 +17,12 @@ trait WeekTrait
     {
         return $this->hasMany(Game::class)->orderBy('start_date');
     }
+
+    public function myGames()
+    {
+        return $this->hasMany(Game::class)
+                    ->whereIn('away_team', auth()->user()->teams ?? [])
+                    ->orWhereIn('home_team', auth()->user()->teams ?? [])
+                    ->orderBy('start_date');
+    }
 }
