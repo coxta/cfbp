@@ -3,10 +3,12 @@
 namespace App\Jobs\Feeds;
 
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 use App\Models\Game;
 use App\Models\GameHist;
 use App\Models\Team;
+use App\Models\Week;
 
 use Illuminate\Support\Str;
 
@@ -46,126 +48,146 @@ class Games implements ShouldQueue
     {
         FeedController::running($this->log, $this->job->payload()['uuid']);
 
-        $snapshot_id = Str::uuid()->toString();
-        $snapshot_timestamp = now();
+        $week = Week::where('start_date', '<=', now())
+                        ->where('end_date', '>=', now())
+                        ->first();
 
-        $response = Http::get(config('espn.games'));
-        $games = $response->json()['events'];
+        $from = Carbon::parse($week->start_date);
+        $thru = Carbon::parse($week->end_date);
+        
+        $from = $from->subDays(1);
+        $thru = $thru->addDays(1);
 
-        foreach ($games as $game) {
+        $dates = CarbonPeriod::create($from, $thru);
 
-            $g = $game['competitions'][0];
+        foreach ($dates as $date) {
 
-            $start = Carbon::parse($g['date']);
-            $start_date = Carbon::createFromFormat('Y-m-d H:i:s', $start);
+            $day = $date->format('Ymd');
 
-            $home_team = null;
-            $home_rank = 99;
-            $home_score = 0;
-            $home_lines = null;
+            $dateRequest = config('espn.games') . '&calendar=blacklist&dates=' . $day;
 
-            $away_team = null;
-            $away_rank = 99;
-            $away_score = 0;
-            $away_lines = null;
-            $teams = [];
+            $response = Http::get($dateRequest);
+            $games = $response->json()['events'] ?? null;
 
-            foreach ($g['competitors'] as $team) {
+            if(!$games) continue;
 
-                array_push($teams,intval($team['team']['id']));
+            foreach ($games as $game) {
 
-                if ($team['homeAway'] == 'home') {
-                    $home_team = $team['team']['id'] > 0 ? $team['team']['id'] : 0;
-                    $home_score = $team['score'];
-                    $home_lines = $team['linescores'] ?? null;
-                    $home_records = $team['records'] ?? null;
-                    $home_rank = $team['curatedRank']['current'] ?? 99;
-                } else {
-                    $away_team = $team['team']['id'] > 0 ? $team['team']['id'] : 0;
-                    $away_score = $team['score'];
-                    $away_lines = $team['linescores'] ?? null;
-                    $away_records = $team['records'] ?? null;
-                    $away_rank = $team['curatedRank']['current'] ?? 99;
-                }
-            }
+                $g = $game['competitions'][0];
 
-            $spread = null;
-            $over_under = null;
-            $favorite = null;
-            $odds = null;
+                $start = Carbon::parse($g['date']);
+                $start_date = Carbon::createFromFormat('Y-m-d H:i:s', $start);
 
-            if (isset($g['odds'][0]['details'])) {
-                $odds = $g['odds'][0]['details'];
-                if (strtolower($g['odds'][0]['details']) == 'even') {
-                    $spread = 0;
-                    $favorite = null;
-                } else {
-                    $fav = explode(' ', $g['odds'][0]['details']);
-                    $t = Team::where('abbreviation', $fav[0])->first();
-                    if ($t) {
-                        $favorite = $t->id;
-                        $spread = $fav[1];
+                $home_team = null;
+                $home_rank = 99;
+                $home_score = 0;
+                $home_lines = null;
+
+                $away_team = null;
+                $away_rank = 99;
+                $away_score = 0;
+                $away_lines = null;
+                $teams = [];
+
+                foreach ($g['competitors'] as $team) {
+
+                    array_push($teams,intval($team['team']['id']));
+
+                    if ($team['homeAway'] == 'home') {
+                        $home_team = $team['team']['id'] > 0 ? $team['team']['id'] : 0;
+                        $home_score = $team['score'];
+                        $home_lines = $team['linescores'] ?? null;
+                        $home_records = $team['records'] ?? null;
+                        $home_rank = $team['curatedRank']['current'] ?? 99;
+                    } else {
+                        $away_team = $team['team']['id'] > 0 ? $team['team']['id'] : 0;
+                        $away_score = $team['score'];
+                        $away_lines = $team['linescores'] ?? null;
+                        $away_records = $team['records'] ?? null;
+                        $away_rank = $team['curatedRank']['current'] ?? 99;
                     }
                 }
+
+                $spread = null;
+                $over_under = null;
+                $favorite = null;
+                $odds = null;
+
+                if (isset($g['odds'][0]['details'])) {
+                    $odds = $g['odds'][0]['details'];
+                    if (strtolower($g['odds'][0]['details']) == 'even') {
+                        $spread = 0;
+                        $favorite = null;
+                    } else {
+                        $fav = explode(' ', $g['odds'][0]['details']);
+                        // $t = Team::where('abbreviation', $fav[0])->first();
+                        $t = Team::byAbbreviation($fav[0]);
+                        if ($t) {
+                            $favorite = $t->id;
+                            $spread = $fav[1];
+                        }
+                    }
+                }
+
+                if (isset($g['odds'][0]['overUnder'])) {
+                    $over_under = $g['odds'][0]['overUnder'];
+                }
+
+                $model = Game::updateOrCreate(
+                    ['id' => $game['id']],
+                    [
+                        'name' => $game['name'],
+                        'start_date' => $start_date,
+                        'short_name' => $game['shortName'],
+                        'game_type' => $g['type']['abbreviation'],
+                        'game_type_id' => $g['type']['id'],
+                        'venue' => $g['venue'] ?? null,
+                        'attendance' => $g['attendance'] ?? 0,
+                        'notes' => $g['notes'] ?? null,
+                        'situation' => $g['situation'] ?? null,
+                        'leaders' => $g['leaders'] ?? null,
+                        'broadcasts' => $g['broadcasts'] ?? null,
+                        'teams' => $teams,
+                        'home_team' => $home_team,
+                        'home_rank' => $home_rank,
+                        'home_score' => $home_score,
+                        'home_lines' => $home_lines,
+                        'home_records' => $home_records,
+                        'away_team' => $away_team,
+                        'away_rank' => $away_rank,
+                        'away_score' => $away_score,
+                        'away_lines' => $away_lines,
+                        'away_records' => $away_records,
+                        'odds' => $odds,
+                        'favorite_team' => $favorite,
+                        'spread' => $spread,
+                        'over_under' => $over_under,
+                        'status' => $game['status']['type']['name'],
+                        'status_desc' => $game['status']['type']['description'],
+                        'status_detail' => $game['status']['type']['detail'],
+                        'status_detail_short' => $game['status']['type']['shortDetail'],
+                        'clock' => $game['status']['clock'],
+                        'clock_display' => $game['status']['displayClock'],
+                        'period' => $game['status']['period'],
+                        'completed' => $game['status']['type']['completed']
+                    ]
+                );
+
+                // Game Hist
+                $snapshot = new GameHist;
+
+                $snapshot->game_id = $game['id'];
+                $snapshot->status = $game['status']['type']['description'];
+                $snapshot->odds = $odds;
+                $snapshot->favorite_team = $favorite;
+                $snapshot->spread = $spread;
+                $snapshot->over_under = $over_under;
+                $snapshot->away_score = $away_score;
+                $snapshot->home_score = $home_score;
+
+                $snapshot->save();
+
             }
-
-            if (isset($g['odds'][0]['overUnder'])) {
-                $over_under = $g['odds'][0]['overUnder'];
-            }
-
-            $model = Game::updateOrCreate(
-                ['id' => $game['id']],
-                [
-                    'name' => $game['name'],
-                    'start_date' => $start_date,
-                    'short_name' => $game['shortName'],
-                    'game_type' => $g['type']['abbreviation'],
-                    'game_type_id' => $g['type']['id'],
-                    'venue' => $g['venue'] ?? null,
-                    'attendance' => $g['attendance'] ?? 0,
-                    'notes' => $g['notes'] ?? null,
-                    'situation' => $g['situation'] ?? null,
-                    'leaders' => $g['leaders'] ?? null,
-                    'broadcasts' => $g['broadcasts'] ?? null,
-                    'teams' => $teams,
-                    'home_team' => $home_team,
-                    'home_rank' => $home_rank,
-                    'home_score' => $home_score,
-                    'home_lines' => $home_lines,
-                    'home_records' => $home_records,
-                    'away_team' => $away_team,
-                    'away_rank' => $away_rank,
-                    'away_score' => $away_score,
-                    'away_lines' => $away_lines,
-                    'away_records' => $away_records,
-                    'odds' => $odds,
-                    'favorite_team' => $favorite,
-                    'spread' => $spread,
-                    'over_under' => $over_under,
-                    'status' => $game['status']['type']['name'],
-                    'status_desc' => $game['status']['type']['description'],
-                    'status_detail' => $game['status']['type']['detail'],
-                    'status_detail_short' => $game['status']['type']['shortDetail'],
-                    'clock' => $game['status']['clock'],
-                    'clock_display' => $game['status']['displayClock'],
-                    'period' => $game['status']['period'],
-                    'completed' => $game['status']['type']['completed']
-                ]
-            );
-
-            // Game Hist
-            $snapshot = new GameHist;
-
-            $snapshot->game_id = $game['id'];
-            $snapshot->status = $game['status']['type']['description'];
-            $snapshot->odds = $odds;
-            $snapshot->favorite_team = $favorite;
-            $snapshot->spread = $spread;
-            $snapshot->over_under = $over_under;
-            $snapshot->away_score = $away_score;
-            $snapshot->home_score = $home_score;
-
-            $snapshot->save();
 
         }
 
