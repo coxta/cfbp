@@ -35,7 +35,6 @@ class SeasonSchedule implements ShouldQueue
      */
     public function __construct()
     {
-        $this->log = FeedController::queued('SeasonSchedule');
     }
 
     /**
@@ -45,6 +44,8 @@ class SeasonSchedule implements ShouldQueue
      */
     public function handle()
     {
+
+        $this->log = FeedController::queued('SeasonSchedule');
         FeedController::running($this->log, $this->job->payload()['uuid']);
 
         $calendars = Calendar::select(DB::raw('min(start_date) as from_dt'), DB::raw('max(end_date) as thru_dt'))

@@ -30,9 +30,8 @@ class Rankings implements ShouldQueue
      */
     public function __construct()
     {
-        $this->log = FeedController::queued('Rankings');
     }
-
+    
     /**
      * Execute the job.
      *
@@ -40,6 +39,8 @@ class Rankings implements ShouldQueue
      */
     public function handle()
     {
+        
+        $this->log = FeedController::queued('Rankings');
         FeedController::running($this->log, $this->job->payload()['uuid']);
 
         $weeks = Week::select('number')->whereHas('calendar', function ($calendar) {

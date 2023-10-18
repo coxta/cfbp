@@ -28,7 +28,6 @@ class Teams implements ShouldQueue
      */
     public function __construct()
     {
-        $this->log = FeedController::queued('Teams');
     }
 
     /**
@@ -39,6 +38,7 @@ class Teams implements ShouldQueue
     public function handle()
     {
 
+        $this->log = FeedController::queued('Teams');
         FeedController::running($this->log, $this->job->payload()['uuid']);
 
         $response = Http::get(config('espn.teams'));

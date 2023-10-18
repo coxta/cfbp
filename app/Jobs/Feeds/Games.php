@@ -36,7 +36,6 @@ class Games implements ShouldQueue
      */
     public function __construct()
     {
-        $this->log = FeedController::queued('Games');
     }
 
     /**
@@ -46,6 +45,8 @@ class Games implements ShouldQueue
      */
     public function handle()
     {
+
+        $this->log = FeedController::queued('Games');
         FeedController::running($this->log, $this->job->payload()['uuid']);
 
         $week = Week::where('start_date', '<=', now())

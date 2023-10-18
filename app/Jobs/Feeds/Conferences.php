@@ -30,7 +30,6 @@ class Conferences implements ShouldQueue
      */
     public function __construct()
     {
-        $this->log = FeedController::queued('Conferences');
     }
 
     /**
@@ -40,7 +39,8 @@ class Conferences implements ShouldQueue
      */
     public function handle()
     {
-
+        
+        $this->log = FeedController::queued('Conferences');
         FeedController::running($this->log, $this->job->payload()['uuid']);
 
         $response = Http::get(config('espn.conferences'));
