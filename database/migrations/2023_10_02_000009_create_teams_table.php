@@ -14,9 +14,9 @@ class CreateTeamsTable extends Migration
     public function up()
     {
         Schema::create('teams', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('conference_id')->nullable()->constrained();
-            $table->foreignId('division_id')->nullable()->constrained();
+            $table->unsignedMediumInteger('id')->primary();
+            $table->unsignedTinyInteger('conference_id')->nullable();
+            $table->unsignedTinyInteger('division_id')->nullable();
             $table->string('slug', 50)->unique('slug');
             $table->string('location', 50)->nullable();
             $table->string('name', 50)->nullable();
@@ -34,6 +34,11 @@ class CreateTeamsTable extends Migration
             $table->string('conference_standing', 100)->nullable();
             $table->json('stats')->nullable();
             $table->timestamps();
+
+            // Indices
+            $table->index('conference_id');
+            $table->index('division_id');
+            $table->index('slug');
         });
     }
 

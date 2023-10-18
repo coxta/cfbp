@@ -14,10 +14,13 @@ class CreateDivisionsTable extends Migration
     public function up()
     {
         Schema::create('divisions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('conference_id')->constrained();
+            $table->unsignedTinyInteger('id')->primary();
+            $table->unsignedTinyInteger('conference_id');
             $table->string('name', 50);
             $table->timestamps();
+
+            // Indices
+            $table->index('conference_id');
         });
     }
 

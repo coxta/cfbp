@@ -28,8 +28,8 @@ class CreateArticlesTable extends Migration
             $table->timestamp('published', 0);
             $table->timestamps();
 
+            // Indices
             $table->index('espn_id');
-
         });
     }
 

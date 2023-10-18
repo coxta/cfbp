@@ -51,7 +51,12 @@ return new class extends Migration
             ORDER BY g.start_date
         ';
 
-        DB::statement($statement);
+        try {
+            //code...
+            DB::statement($statement);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
     }
 

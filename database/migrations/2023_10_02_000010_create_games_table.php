@@ -16,7 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
 
             // IDs
-            $table->id();
+            $table->unsignedInteger('id')->primary();
 
             // Lookups
             $table->uuid('calendar_id');
@@ -27,20 +27,20 @@ class CreateGamesTable extends Migration
             $table->string('name');
             $table->string('short_name', 25);
             $table->string('game_type')->nullable();
-            $table->unsignedSmallInteger('game_type_id')->nullable();
+            $table->unsignedTinyInteger('game_type_id')->nullable();
 
             // Booleans
             $table->boolean('neutral')->default(false);
             $table->boolean('conference_play')->default(false);
 
             // Teams & Scores
-            $table->foreignId('home_team')->nullable()->constrained('teams');
+            $table->unsignedMediumInteger('home_team')->nullable();
             $table->unsignedTinyInteger('home_rank')->default(99);
             $table->unsignedTinyInteger('home_score')->default(0);
             $table->json('home_lines')->nullable();
             $table->json('home_records')->nullable();
 
-            $table->foreignId('away_team')->nullable()->constrained('teams');
+            $table->unsignedMediumInteger('away_team')->nullable();
             $table->unsignedTinyInteger('away_rank')->default(99);
             $table->unsignedTinyInteger('away_score')->default(0);
             $table->json('away_lines')->nullable();
@@ -48,8 +48,9 @@ class CreateGamesTable extends Migration
 
             // Odds
             $table->string('odds', 20)->nullable();
-            $table->foreignId('favorite_team')->nullable()->constrained('teams');
+            $table->unsignedMediumInteger('favorite_team')->nullable();
             $table->tinyInteger('spread')->nullable();
+            $table->unsignedTinyInteger('over_under')->nullable();
 
             // JSONs (Easier for unpredictable meta)
             $table->json('teams');
@@ -75,7 +76,10 @@ class CreateGamesTable extends Migration
             // Indices
             $table->index('calendar_id');
             $table->index('week_id');
-
+            $table->index('status_desc');
+            $table->index('home_team');
+            $table->index('away_team');
+            $table->index('favorite_team');
         });
     }
 

@@ -32,12 +32,13 @@ class CreateRankingsTable extends Migration
             $table->string('trend', 10);
             $table->string('record', 10);
 
-            $table->index('poll');
-            $table->index('calendar_id');
-            $table->index('week_id');
-
             $table->timestamps();
 
+            // Indices
+            $table->index('calendar_id');
+            $table->index('week_id');
+            $table->index('team_id');
+            $table->index('poll');
         });
     }
 

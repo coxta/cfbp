@@ -14,12 +14,15 @@ class CreateConferencesTable extends Migration
     public function up()
     {
         Schema::create('conferences', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedTinyInteger('id')->primary();
             $table->string('name', 50);
             $table->string('abbr', 50);
             $table->string('logo', 100)->nullable();
             $table->string('division', 25);
             $table->timestamps();
+
+            // Indices
+            $table->index('division');
         });
     }
 

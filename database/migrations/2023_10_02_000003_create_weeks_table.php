@@ -20,6 +20,8 @@ return new class extends Migration
             $table->timestamp('start_date');
             $table->timestamp('end_date');
             $table->timestamps();
+
+            // Indices
             $table->index('calendar_id');
         });
     }

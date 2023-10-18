@@ -23,6 +23,7 @@ class CreateFeedLogsTable extends Migration
             $table->longText('exception')->nullable();
             $table->timestamps();
 
+            // Indices
             $table->index('feed_id');
             $table->index('job_id');
         });
