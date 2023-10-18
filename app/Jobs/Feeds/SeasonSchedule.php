@@ -3,12 +3,12 @@
 namespace App\Jobs\Feeds;
 
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 use App\Models\Game;
 use App\Models\Team;
 
 use App\Models\Calendar;
-use Carbon\CarbonPeriod;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\DB;
@@ -56,7 +56,7 @@ class SeasonSchedule implements ShouldQueue
         $from = Carbon::parse($calendars['from_dt']);
         $thru = Carbon::parse($calendars['thru_dt']);
 
-        $dates = CarbonPeriod::make($from, $thru);
+        $dates = CarbonPeriod::create($from, $thru);
 
         foreach ($dates as $date) {
 
@@ -122,7 +122,8 @@ class SeasonSchedule implements ShouldQueue
                                 $favorite = null;
                             } else {
                                 $fav = explode(' ', $g['odds'][0]['details']);
-                                $t = Team::where('abbreviation', $fav[0])->first();
+                                // $t = Team::where('abbreviation', $fav[0])->first();
+                                $t = Team::byAbbreviation($fav[0]);
                                 if ($t) {
                                     $favorite = $t->id;
                                     $spread = $fav[1];
