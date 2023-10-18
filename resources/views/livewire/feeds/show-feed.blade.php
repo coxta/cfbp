@@ -1,3 +1,7 @@
+@php
+use Carbon\Carbon;
+@endphp
+
 <div x-data="{ editing: @entangle('editing').live }" x-cloak>
 
     @slot('title')
@@ -71,15 +75,18 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($logs as $log)
+
+
+
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                        {{ $log->job_id ?? $log->id }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $log->created_at }}
+                                        {{ Carbon::parse($log->created_at)->setTimezone('America/New_York')->format('M jS, g:i:s a') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $log->started_at }}
+                                        {{ Carbon::parse($log->started_at)->setTimezone('America/New_York')->format('M jS, g:i:s a') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $log->disposition }}<span class="text-xs text-gray-500 font-semibold ml-2">{{ $log->duration }}</span>
