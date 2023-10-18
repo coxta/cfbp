@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
         // $schedule->job(new News)->everyTenMinutes();
         // $schedule->job(new Games)->hourly();
         // $schedule->job(new Teams)->daily();
-        $schedule->job(new Rankings)->everyTwoMinutes();
+        // $schedule->job(new Rankings)->everyTwoMinutes();
         // $schedule->job(new SeasonSchedule)->daily();
     }
 
