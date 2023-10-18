@@ -7,7 +7,7 @@ environments:
         timeout: 300
         queue-timeout: 600
         database: cfbp-db
-        scheduler: false
+        scheduler: true
         runtime: 'php-8.2:al2'
         domain: 'cfbpickem.net'
         # cache: cfbp-redis
