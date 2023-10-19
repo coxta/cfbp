@@ -121,7 +121,6 @@ class Games implements ShouldQueue
                         $favorite = null;
                     } else {
                         $fav = explode(' ', $g['odds'][0]['details']);
-                        // $t = Team::where('abbreviation', $fav[0])->first();
                         $t = Team::byAbbreviation($fav[0]);
                         if ($t) {
                             $favorite = $t->id;
