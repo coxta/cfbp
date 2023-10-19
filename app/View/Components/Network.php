@@ -12,7 +12,7 @@ public $network, $size;
      *
      * @return void
      */
-    public function __construct($network, $size = 3)
+    public function __construct($network, $size = 2)
     {
 
         switch ($network) {
