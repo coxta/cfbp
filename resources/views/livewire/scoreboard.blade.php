@@ -110,7 +110,7 @@
                                                 @foreach ($myGame->away_lines as $aline)
                                                     <td scope="col"
                                                         class="px-3 py-1.5 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                                        {{ $aline['value'] }}
+                                                        {{ $aline['value'] ?? ($aline['displayValue'] ?? '-') }}
                                                     </td>
                                                 @endforeach
                                             </tr>
@@ -118,7 +118,7 @@
                                                 @foreach ($myGame->home_lines as $hline)
                                                     <td scope="col"
                                                         class="px-3 py-1.5 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                                        {{ $hline['value'] }}
+                                                        {{ $hline['value'] ?? ($hline['displayValue'] ?? '-') }}
                                                     </td>
                                                 @endforeach
                                             </tr>
@@ -226,7 +226,7 @@
                                                 @foreach ($game->away_lines as $aline)
                                                     <td scope="col"
                                                         class="px-3 py-1.5 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                                        {{ $aline['value'] }}
+                                                        {{ $aline['value'] ?? ($aline['displayValue'] ?? '-') }}
                                                     </td>
                                                 @endforeach
                                             </tr>
@@ -234,7 +234,7 @@
                                                 @foreach ($game->home_lines as $hline)
                                                     <td scope="col"
                                                         class="px-3 py-1.5 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                                        {{ $hline['value'] }}
+                                                        {{ $hline['value'] ?? ($hline['displayValue'] ?? '-') }}
                                                     </td>
                                                 @endforeach
                                             </tr>

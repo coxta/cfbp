@@ -3,15 +3,18 @@
 namespace App\Livewire;
 
 use App\Models\Game;
+use App\Http\Controllers\GameController;
 use Livewire\Component;
 
 class ShowGame extends Component
 {
-    public $game;
+    public $game, $summary;
 
-    public function mount(Game $game)
+    public function mount($game)
     {
-        $this->game = $game;
+        $sync = GameController::sync($game);
+        $this->game = $sync['game'];
+        $this->summary = $sync['summary'];
     }
 
     public function render()
