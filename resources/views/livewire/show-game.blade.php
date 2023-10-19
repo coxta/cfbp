@@ -23,8 +23,13 @@
 
         <div class="flex flex-col gap-2 order-2 lg:order-1 lg:col-span-3">
 
-            <x-game-summary.playmakers :game="$summary['leaders']" />
-
+            @if($game->status_desc == 'Scheduled')
+                <x-game-summary.prediction :game="$summary['prediction']" />
+                <x-game-summary.playmakers :game="$summary['leaders']" />
+            @else
+                <x-game-summary.playmakers :game="$summary['leaders']" />
+                <x-game-summary.prediction :game="$summary['prediction']" />
+            @endif
             <div class="rounded-lg bg-white shadow px-4 py-3 h-24">
                 Win Probabilities
             </div>

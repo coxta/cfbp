@@ -73,6 +73,7 @@ class GameController extends Controller
             $summary['drives'] = $data['drives'] ?? [];
             $summary['leaders'] = $data['leaders'] ?? [];
             $summary['news'] = $data['news'] ?? [];
+            $summary['prediction'] = $data['predictor'] ?? [];
             $summary['probability'] = $data['winprobability'] ?? [];
             $summary['scoring'] = $data['scoringPlays'] ?? [];
             $summary['standings'] = $data['standings'] ?? [];
