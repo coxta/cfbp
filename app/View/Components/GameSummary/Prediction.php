@@ -35,15 +35,24 @@ class Prediction extends Component
             floatval($this->game['awayTeam']['gameProjection']),
         ];
 
-        $fav = floatval($this->game['homeTeam']['gameProjection']) >= 50 
-                ? $home->abbreviation . ' ' . $this->game['homeTeam']['gameProjection'] . '%' 
-                : $away->abbreviation . ' ' . $this->game['awayTeam']['gameProjection'] . '%' ;
+        $homeProjection = floatval($this->game['homeTeam']['gameProjection']);
+        
+        $fav = $home->abbreviation;
+        $chance = $this->game['homeTeam']['gameProjection'];
+        
+        if($homeProjection < 50) {
+            $chance = $this->game['awayTeam']['gameProjection'];
+            $fav = $away->abbreviation;
+        }
+
+        $chance .= '%';
 
         return view('components.game-summary.prediction',[
             'labels' => $labels,
             'colors' => $colors,
+            'fav' => $fav,
+            'chance' => $chance,
             'chances' => $chances,
-            'fav' => $fav
         ]);
     }
 }

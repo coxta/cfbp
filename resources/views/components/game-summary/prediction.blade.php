@@ -13,6 +13,7 @@
         var chances =  {{ Js::from($chances) }};
 
         var fav =  {{ Js::from($fav) }};
+        var chance =  {{ Js::from($chance) }};
 
         const data = {
             labels: labels,
@@ -28,12 +29,20 @@
             beforeDatasetsDraw(chart, args, pluginOptions) {
                 const { ctx, data } = chart;
                 ctx.save();
+
                 const xCoor = chart.getDatasetMeta(0).data[0].x;
                 const yCoor = chart.getDatasetMeta(0).data[0].y;
-                ctx.font = 'bold 18px sans-serif';
+
+                ctx.font = 'bold 20px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(fav, xCoor, yCoor);
+                ctx.fillText(fav, xCoor, yCoor - 22);
+
+                ctx.font = 'bold 30px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(chance, xCoor, yCoor + 10);
+
             }
         }
 
