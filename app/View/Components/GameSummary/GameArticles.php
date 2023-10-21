@@ -16,11 +16,11 @@ class GameArticles extends Component
     public function __construct($article, $stories)
     {
         $this->stories = $stories;
-        $this->headline = $article['headline'];
-        $this->description = $article['description'];
+        $this->headline = $article['headline'] ?? null;
+        $this->description = $article['description'] ?? null;
 
         // Convert line breaks to <br> tags
-        $this->story = str_replace("\n\n\r\n", "<br><br>", $article['story']);
+        $this->story = str_replace("\n\n\r\n", "<br><br>", $article['story'] ?? null);
 
     }
 

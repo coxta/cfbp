@@ -1,5 +1,6 @@
 <div>
 
+    @if(isset($headline))
     <div class="flex flex-col bg-white rounded-lg shadow overflow-hidden mb-4 p-6 justify-between">
         <div class="flex-1">
             <p class="text-lg font-semibold text-gray-900">
@@ -13,7 +14,8 @@
             {!! $story !!}
         </div>
     </div>
-
+    @endif
+    
     @foreach ($stories as $story)
 
         <div class="flex flex-col rounded-lg shadow overflow-hidden mb-4">
