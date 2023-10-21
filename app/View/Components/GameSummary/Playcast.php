@@ -27,8 +27,8 @@ class Playcast extends Component
     {
 
         $currentDrive = $this->drives['current'] ?? null;
-
         $current = [];
+        $previous = $this->drives['previous'] ?? null;
 
         if($currentDrive) {
             $playCount = count($currentDrive['plays']);
@@ -37,12 +37,12 @@ class Playcast extends Component
             $current['yardline'] = $lastPlay['end']['yardLine'] ?? $lastPlay['start']['yardLine'];
             $current['summary'] = $currentDrive['description'];
             $current['last'] = $lastPlay;
-
-            // ddd($current['last']['start']['downDistanceText']);
+            $current['plays'] = $currentDrive['plays'];
         }
 
         return view('components.game-summary.playcast', [
-            'current' => $current
+            'current' => $current,
+            'previous' => $previous
         ]);
     }
 }
