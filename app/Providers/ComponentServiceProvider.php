@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use App\View\Components\Utilities\Button;
 use App\View\Components\Utilities\Loader;
 use App\View\Components\Utilities\Container;
+use App\View\Components\Utilities\UnderConstruction;
 
 class ComponentServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,7 @@ class ComponentServiceProvider extends ServiceProvider
         Blade::component('button', Button::class);
         Blade::component('loader', Loader::class);
         Blade::component('container', Container::class);
+        Blade::component('under-construction', UnderConstruction::class);
 
     }
 }
