@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.game-story a
+{
+    /* These links will be blue when hovered-over */
+    color:rgb(60, 0, 255);
+}
