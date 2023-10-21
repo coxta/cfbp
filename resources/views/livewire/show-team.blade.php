@@ -15,12 +15,12 @@
                         <div class="font-light text-gray-600">{{ $team->name }}</div>
                     </div>
                     <div x-show="!compact"
-                        class="transition-all flex items-center space-x-1 text-sm md:text-base font-light text-gray-500">
+                        class="transition-all flex items-center space-x-1 text-sm tracking-tighter font-normal text-gray-500">
                         <div>{{ $team->wins . '-' . $team->losses }}</div>
                         <div>({{ $team->conference_wins . '-' . $team->conference_losses }})</div>
-                        {{-- <x-bi-dot class="w-8 h-8" /> --}}
-                        <x-heroicon-o-minus-small class="w-8 h-8" />
-                        <div>{{ $team->conference_standing }}</div>
+                        {{-- <x-heroicon-o-minus-small class="w-8 h-8" /> --}}
+                        <x-bi-dot class="w-6" />
+                        <div class="font-light">{{ $team->conference_standing }}</div>
                     </div>
                 </div>
             </div>
