@@ -72,11 +72,12 @@ class GameController extends Controller
             $summary['venue'] = $data['gameInfo']['venue'] ?? [];
             $summary['drives'] = $data['drives'] ?? [];
             $summary['leaders'] = $data['leaders'] ?? [];
-            $summary['news'] = $data['news'] ?? [];
+            $summary['news'] = $data['news']['articles'] ?? [];
             $summary['prediction'] = $data['predictor'] ?? [];
             $summary['probability'] = $data['winprobability'] ?? [];
             $summary['scoring'] = $data['scoringPlays'] ?? [];
             $summary['standings'] = $data['standings'] ?? [];
+            $summary['article'] = $data['article'] ?? [];
 
         } catch (Exception $e) {
             Log::info($e->getMessage());
