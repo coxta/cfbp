@@ -1,4 +1,4 @@
-<div class="rounded-lg bg-white shadow p-3">
+<div class="rounded-lg bg-white shadow py-4 px-6">
     
     {{-- <h2 class="text-slate-700 font-semibold text-sm pb-2">Prediction</h2> --}}
 
@@ -20,7 +20,8 @@
             datasets: [{
                 data: chances,
                 backgroundColor: colors,
-                hoverOffset: 4
+                hoverOffset: 4,
+                borderRadius: 50,
             }]
         };
 
@@ -50,7 +51,7 @@
             type: 'doughnut',
             data: data,
             options: {
-                cutout: '70%',
+                cutout: '82%',
                 responsive: true,
                 animation: {
                     animateScale: true,
