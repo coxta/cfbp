@@ -25,6 +25,24 @@ class Playcast extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.game-summary.playcast');
+
+        $currentDrive = $this->drives['current'] ?? null;
+
+        $current = [];
+
+        if($currentDrive) {
+            $playCount = count($currentDrive['plays']);
+            $lastPlay = $currentDrive['plays'][$playCount - 1];
+            $current['down'] = $lastPlay['end']['shortDownDistanceText'] ?? $lastPlay['start']['shortDownDistanceText'];
+            $current['yardline'] = $lastPlay['end']['yardLine'] ?? $lastPlay['start']['yardLine'];
+            $current['summary'] = $currentDrive['description'];
+            $current['last'] = $lastPlay;
+
+            // ddd($current['last']['start']['downDistanceText']);
+        }
+
+        return view('components.game-summary.playcast', [
+            'current' => $current
+        ]);
     }
 }
