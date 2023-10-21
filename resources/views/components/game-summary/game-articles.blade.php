@@ -5,9 +5,9 @@
             <p class="text-lg font-semibold text-gray-900">
                 {{ $headline }}
             </p>
-            <p class="mt-3 text-sm text-gray-500">
+            {{-- <p class="mt-3 text-sm text-gray-500">
                 {{ $description }}s
-            </p>
+            </p> --}}
         </div>
         <div class="mt-6 text-xs text-gray-700 game-story">
             {!! $story !!}
