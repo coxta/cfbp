@@ -22,6 +22,26 @@ class Teams extends Component
 
     public $teams;
     
+    public function mount()
+    {
+        $this-> divisions = [];
+        array_push($this->divisions, [
+            'name' => 'FBS',
+            'value' => 'FBS'
+        ]);
+        array_push($this->divisions, [
+            'name' => 'FCS',
+            'value' => 'FCS'
+        ]);
+        array_push($this->divisions, [
+            'name' => 'Div II',
+            'value' => 'Div II'
+        ]);
+        array_push($this->divisions, [
+            'name' => 'Div III',
+            'value' => 'Div III'
+        ]);
+    }
     public function render()
     {
         $this->filters();
@@ -74,25 +94,6 @@ class Teams extends Component
 
     public function filters()
     {
-        
-        $this-> divisions = [];
-
-        array_push($this->divisions, [
-            'name' => 'FBS',
-            'value' => 'FBS'
-        ]);
-        array_push($this->divisions, [
-            'name' => 'FCS',
-            'value' => 'FCS'
-        ]);
-        array_push($this->divisions, [
-            'name' => 'Div II',
-            'value' => 'Div II'
-        ]);
-        array_push($this->divisions, [
-            'name' => 'Div III',
-            'value' => 'Div III'
-        ]);
 
         $this->conferences = [];
         $this->conferenceIds = [];
