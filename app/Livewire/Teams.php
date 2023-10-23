@@ -34,10 +34,14 @@ class Teams extends Component
         if($this->conference > 0) {
             $this->teams = Team::without('conference')
                             ->select([
-                                'teams.id as id',
-                                'teams.name as name',
-                                'teams.location as location',
-                                'teams.logo as logo',
+                                'teams.id',
+                                'teams.name',
+                                'teams.location',
+                                'teams.logo',
+                                'teams.wins',
+                                'teams.losses',
+                                'teams.conference_wins',
+                                'teams.conference_losses',
                                 'conferences.id as conference_id',
                                 'conferences.abbr as conference_abbr'
                             ])
@@ -49,10 +53,14 @@ class Teams extends Component
         } else {
             $this->teams = Team::without('conference')
                             ->select([
-                                'teams.id as id',
-                                'teams.name as name',
-                                'teams.location as location',
-                                'teams.logo as logo',
+                                'teams.id',
+                                'teams.name',
+                                'teams.location',
+                                'teams.logo',
+                                'teams.wins',
+                                'teams.losses',
+                                'teams.conference_wins',
+                                'teams.conference_losses',
                                 'conferences.id as conference_id',
                                 'conferences.abbr as conference_abbr'
                             ])

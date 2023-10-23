@@ -30,11 +30,16 @@
                     {{ $team->conference_abbr }}
                 </div>
             @endif
-                <a href="/teams/{{ $team->id }}" class="flex flex-row ml-2 items-center space-x-4 py-1 cursor-pointer text-gray-800 hover:text-blue-800 {{ $loop->last ? '' : 'border-b border-gray-200' }}">
-                    <img src="{{ $team->logo }}" class="w-8 h-8" />
-                    <span class="font-bold">
-                        {{ $team->location . ' ' . $team->name }}
-                    </span>
+                <a href="/teams/{{ $team->id }}" class="flex flex-row ml-2 items-center justify-between space-x-4 py-1 cursor-pointer text-gray-800 hover:text-blue-800 {{ $loop->last ? '' : 'border-b border-gray-200' }}">
+                    <div class="flex flex-row items-center space-x-4">
+                        <img src="{{ $team->logo }}" class="w-8 h-8" />
+                        <span class="font-bold">
+                            {{ $team->location . ' ' . $team->name }}
+                        </span>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        {{ $team->wins . '-' . $team->losses }}
+                    </div>
                 </a>
         @endforeach
 
