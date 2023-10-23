@@ -1,4 +1,4 @@
-<div wire:poll.15s>
+<div @if(in_array($game->status_desc, ['In Progress','End of Period','Halftime'])) wire:poll.15s @endif>
 
     @slot('title')
         {{ $game->short_name }}
@@ -26,11 +26,11 @@
             <x-game-summary.venue :venue="$summary['venue']" />
 
             @if($game->status_desc == 'Scheduled')
-                <x-game-summary.prediction :game="$summary['prediction']" />
+                <x-game-summary.prediction wire:ignore :game="$summary['prediction']" />
                 <x-game-summary.playmakers :game="$summary['leaders']" />
             @else
                 <x-game-summary.playmakers :game="$summary['leaders']" />
-                <x-game-summary.prediction :game="$summary['prediction']" />
+                <x-game-summary.prediction wire:ignore :game="$summary['prediction']" />
             @endif
 
             <x-game-summary.probability :game="$summary['probability']" />
