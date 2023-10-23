@@ -1,4 +1,4 @@
-<div>
+<div wire:poll.15s>
 
     @slot('title')
         {{ $game->short_name }}
@@ -14,7 +14,7 @@
         <div class="flex flex-col gap-2 order-3 lg:order-2 lg:col-span-6">
 
             @unless($game->status_desc == 'Scheduled')
-                <x-game-summary.playcast :drives="$summary['drives']" :scoring="$summary['scoring']" />
+                <x-game-summary.playcast :drives="$summary['drives']" :scoring="$summary['scoring']" :home="$game->homeTeam" :away="$game->awayTeam"/>
             @endunless
 
             <x-game-summary.game-articles :article="$summary['article']" :stories="$summary['news']" />

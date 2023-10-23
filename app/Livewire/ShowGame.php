@@ -2,23 +2,23 @@
 
 namespace App\Livewire;
 
-use App\Models\Game;
 use App\Http\Controllers\GameController;
 use Livewire\Component;
 
 class ShowGame extends Component
 {
-    public $game, $summary;
+    public $id, $game, $summary;
 
     public function mount($game)
     {
-        $sync = GameController::sync($game);
-        $this->game = $sync['game'];
-        $this->summary = $sync['summary'];
+        $this->id = $game;
     }
 
     public function render()
     {
+        $sync = GameController::sync($this->id);
+        $this->game = $sync['game'];
+        $this->summary = $sync['summary'];
         return view('livewire.show-game');
     }
 }

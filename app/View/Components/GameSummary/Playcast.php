@@ -9,15 +9,17 @@ use Illuminate\View\Component;
 class Playcast extends Component
 {
 
-    public $drives, $scoring;
+    public $drives, $scoring, $home, $away;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($drives, $scoring)
+    public function __construct($drives, $scoring, $home, $away)
     {
         $this->drives = $drives;
         $this->scoring = $scoring;
+        $this->home = $home;
+        $this->away = $away;
     }
 
     /**
