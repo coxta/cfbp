@@ -11,7 +11,7 @@
     x-init="chars = $refs.input.value.length"
     @change="chars = $refs.input.value.length"
     @input="chars = $refs.input.value.length"
-    class="w-full lg:mt-3 {{ $attributes['class'] }} ">
+    class="w-full lg:mt-1 {{ $attributes['class'] }} ">
 
     @if($attributes->has('label'))
         <label for="{{ $model }}" class="relative flex items-center mb-1 text-xs font-medium text-gray-500">

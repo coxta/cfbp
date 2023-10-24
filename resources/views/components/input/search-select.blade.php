@@ -3,7 +3,7 @@ $model = $attributes->wire('model')->value();
 @endphp
 <div @if ($attributes->has('disabled')) x-data="{ disabled: @entangle($attributes['disabled']).live}"
  @else
-     x-data="{ disabled: false }" @endif class="w-full lg:mt-3 {{ $attributes['class'] }} ">
+     x-data="{ disabled: false }" @endif class="w-full lg:mt-1 {{ $attributes['class'] }} ">
     @if ($attributes->has('label'))
         <label for="{{ $model }}" class="flex items-center mb-1 text-xs font-medium text-gray-500">
             {{ $attributes['label'] }}

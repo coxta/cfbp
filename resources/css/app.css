@@ -2,6 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+
+    /* Default EFI Color swatch */
+
+    /* Neutral */
+    --light: theme('colors.gray.100');
+    --lightName: 'Gray 100';
+
+    --lightAccent: theme('colors.gray.200');
+    --lightAccentName: 'Gray 200';
+
+    --muted: theme('colors.gray.400');
+    --mutedName: 'Gray 400';
+
+    --mutedAccent: theme('colors.gray.500');
+    --mutedAccentName: 'Gray 500';
+
+    --dark: theme('colors.gray.700');
+    --darkName: 'Gray 700';
+
+    --darkAccent: theme('colors.gray.900');
+    --darkAccentName: 'Gray 900';
+
+    /* Branded */
+    --primary: theme('colors.blue.600');
+    --primaryName: 'Blue 600';
+
+    --primaryAccent: theme('colors.blue.800');
+    --primaryAccentName: 'Blue 800';
+
+    --secondary: theme('colors.gray.500');
+    --secondaryName: 'Gray 500';
+
+    --secondaryAccent: theme('colors.gray.600');
+    --secondaryAccentName: 'Gray 600';
+
+    /* Actions */
+    --danger: #dc3545;
+    --dangerName: #dc3545;
+
+    --dangerAccent: #bb2d3b;
+    --dangerAccentName: #bb2d3b;
+
+    --success: #198754;
+    --successName: #198754;
+
+    --successAccent: #157347;
+    --successAccentName: #157347;
+
+    --warning: #ffc107;
+    --warningName: #ffc107;
+
+    --warningAccent: #ffca2c;
+    --warningAccentName: #ffca2c;
+
+    --info: #0dcaf0;
+    --infoName: #0dcaf0;
+
+    --infoAccent: #31d2f2;
+    --infoAccentName: #31d2f2;
+
+    }
+}
+
 .game-story a
 {
     /* These links will be blue when hovered-over */
