@@ -74,7 +74,7 @@
                             </x-nav-link>
                         </li>
                         <li>
-                            <x-nav-link :href="route('teams')" :active="request()->routeIs('teams')">
+                            <x-nav-link :href="route('teams')" :active="request()->routeIs('teams') || request()->routeIs('team')">
                                 <img src="{{ secure_asset('img/nav-icons/teams.svg') }}" class="h-6 w-6"/>
                                 {{ __('Teams') }}
                             </x-nav-link>
@@ -145,7 +145,7 @@
                         </x-nav-link>
                     </li>
                     <li>
-                        <x-nav-link :href="route('teams')" :active="request()->routeIs('teams')">
+                        <x-nav-link :href="route('teams')" :active="request()->routeIs('teams') || request()->routeIs('team')">
                             <img src="{{ secure_asset('img/nav-icons/teams.svg') }}" class="h-6 w-6"/>
                             {{ __('Teams') }}
                         </x-nav-link>
