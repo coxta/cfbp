@@ -66,7 +66,7 @@
             <img src="{{ secure_asset('img/cgd.png') }}" class="h-14 w-14"/>
             <div class="flex flex-col">
                 <div class="flex flex-row items-center space-x-2">
-                    <p class="text-lg font-semibold">College Gameday</p>
+                    <p class="tracking-tight font-semibold">College Gameday</p>
                     <x-heroicon-s-arrow-top-right-on-square class="h-4 w-4"/>
                 </div>
                 <p class="text-xs">Where will ESPN's College Gameday be this week?</p>
