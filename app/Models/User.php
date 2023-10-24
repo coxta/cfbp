@@ -29,4 +29,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->admin;
     }
 
+    public function favorites()
+    {
+        return Team::whereIn('id', $this->teams)->get();
+    }
+
 }

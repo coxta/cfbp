@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-full bg-white" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -14,8 +14,7 @@
     <x-title title="{{ $title ?? null }}" />
 
     <!-- Fonts -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('img/logo.png') }}">
@@ -30,27 +29,12 @@
     
 </head>
 
-<body class="font-sans antialiased bg-gray-200">
+<body class="h-full">
+
     <div class="min-h-screen">
 
-        @include('layouts.navigation')
+        @include('layouts.shell')
 
-        @isset ($header)
-            <header class="bg-gray-50 shadow sticky top-14 z-30">
-                <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
-
-        <x-container class="z-20">
-
-            <!-- Page Content -->
-            <main class="my-6 px-4 md:px-0">
-                {{ $slot }}
-            </main>
-
-        </x-container>
     </div>
 
     @livewireScripts

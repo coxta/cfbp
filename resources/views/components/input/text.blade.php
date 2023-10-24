@@ -8,7 +8,7 @@
     @else
     x-data="{ disabled: false }"
     @endif
-    class="w-full lg:mt-3 {{ $attributes['class'] }} ">
+    class="w-full lg:mt-1 {{ $attributes['class'] }} ">
 
     @if($attributes->has('label'))
         <label for="{{ $model }}" class="flex items-center mb-1 text-xs font-medium text-gray-500">

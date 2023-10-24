@@ -8,7 +8,7 @@
     @else
     x-data="{ disabled: false }"
     @endif
-    class="w-full lg:mt-3 {{ $attributes['class'] }} ">
+    class="w-full lg:mt-1 {{ $attributes['class'] }} ">
 
     <div x-data="{ files: null }" class="relative w-full">
 
