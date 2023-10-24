@@ -273,12 +273,8 @@
             </header>
         @endisset
 
-      <main class="py-4">
-        <div class="px-4 sm:px-6 lg:px-8">
-          
-            {{ $slot }}
-
-        </div>
+      <main class="p-4">
+        {{ $slot }}
       </main>
     </div>
   </div>
