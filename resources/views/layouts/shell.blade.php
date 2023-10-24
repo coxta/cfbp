@@ -53,7 +53,7 @@
             <nav class="flex flex-1 flex-col">
               <ul role="list" class="flex flex-1 flex-col gap-y-7">
                 <li>
-                    <div class="text-xs leading-6 text-muted">NCAA Football</div>
+                    <div class="text-xs leading-6 text-muted mb-2 pb-0.5 border-b border-gray-200">NCAA Football</div>
                     <ul role="list" class="ml-0.5 space-y-1">
                         <li>
                             <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
@@ -92,7 +92,7 @@
                 </li>
                 @admin
                     <li>
-                        <div class="text-xs leading-6 text-muted">Admin</div>
+                        <div class="text-xs leading-6 text-muted mb-2 pb-0.5 border-b border-gray-200">Admin</div>
                         <ul role="list" class="ml-0.5 mt-2 space-y-1">
                             <li>
                                 <x-nav-link :href="route('feeds')" :active="request()->routeIs('feeds')">
@@ -124,7 +124,7 @@
         <nav class="flex flex-1 flex-col">
           <ul role="list" class="flex flex-1 flex-col gap-y-7">
             <li>
-                <div class="text-xs leading-6 text-muted">NCAA Football</div>
+                <div class="text-xs leading-6 text-muted mb-2 pb-0.5 border-b border-gray-200">NCAA Football</div>
                 <ul role="list" class="ml-0.5 space-y-1">
                     <li>
                         <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
@@ -163,7 +163,7 @@
             </li>
             @admin
                 <li>
-                    <div class="text-xs leading-6 text-muted">Admin</div>
+                    <div class="text-xs leading-6 text-muted mb-2 pb-0.5 border-b border-gray-200">Admin</div>
                     <ul role="list" class="ml-0.5 mt-2 space-y-1">
                         <li>
                             <x-nav-link :href="route('feeds')" :active="request()->routeIs('feeds')">
