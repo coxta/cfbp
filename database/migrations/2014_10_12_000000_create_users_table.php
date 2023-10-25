@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('admin')->default(false);
             $table->json('teams')->nullable();
+            $table->decimal('balance', 8, 2);
             $table->rememberToken();
             $table->timestamps();
         });
