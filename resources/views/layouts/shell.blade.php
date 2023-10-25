@@ -52,6 +52,18 @@
 
             <nav class="flex flex-1 flex-col">
               <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                <!-- Pickem Routes -->
+                <li>
+                  <div class="text-xs leading-6 text-muted mb-2 pb-0.5 border-b border-gray-200">Pickem</div>
+                  <ul role="list" class="ml-0.5 space-y-1">
+                      <li>
+                          <x-nav-link :href="route('lobby')" :active="request()->routeIs('lobby')">
+                              <img src="{{ secure_asset('img/nav-icons/lobby.svg') }}" class="h-5 w-5"/>
+                              {{ __('Lobby') }}
+                          </x-nav-link>
+                      </li>
+                  </ul>
+                </li>
                 <li>
                     <div class="text-xs leading-6 text-muted mb-2 pb-0.5 border-b border-gray-200">NCAA Football</div>
                     <ul role="list" class="ml-0.5 space-y-1">
@@ -79,15 +91,17 @@
                                 {{ __('Teams') }}
                             </x-nav-link>
                         </li>
-                        @foreach(auth()->user()->favorites() as $team)
-                        <li class="pl-2.5">
-                            <a href="{{ route('team', $team->id ) }}" class="flex flex-row cursor-pointer hover:font-semibold items-center text-dark group flex gap-x-3 p-2 text-sm">
-                                <x-bi-arrow-return-right class="w-4 h-5"/>
-                                <img src="{{ $team->logo }}" class="h-4 w-4"/>
-                                {{ $team->abbreviation }}
-                            </a>
-                        </li>
-                        @endforeach
+                        @if(auth()->check() && count(auth()->user()->teams) > 0)
+                          @foreach(auth()->user()->favorites() as $team)
+                          <li class="pl-2.5">
+                              <a href="{{ route('team', $team->id ) }}" class="flex flex-row cursor-pointer hover:font-semibold items-center text-dark group flex gap-x-3 p-2 text-sm">
+                                  <x-bi-arrow-return-right class="w-4 h-4 text-muted"/>
+                                  <img src="{{ $team->logo }}" class="h-4 w-4"/>
+                                  {{ $team->abbreviation }}
+                              </a>
+                          </li>
+                          @endforeach
+                        @endif
                     </ul>
                 </li>
                 @admin
@@ -123,6 +137,20 @@
 
         <nav class="flex flex-1 flex-col">
           <ul role="list" class="flex flex-1 flex-col gap-y-7">
+
+            <!-- Pickem Routes -->
+            <li>
+              <div class="text-xs leading-6 text-muted mb-2 pb-0.5 border-b border-gray-200">Pickem</div>
+              <ul role="list" class="ml-0.5 space-y-1">
+                  <li>
+                      <x-nav-link :href="route('lobby')" :active="request()->routeIs('lobby')">
+                          <img src="{{ secure_asset('img/nav-icons/lobby.svg') }}" class="h-5 w-5"/>
+                          {{ __('Lobby') }}
+                      </x-nav-link>
+                  </li>
+              </ul>
+            </li>
+
             <li>
                 <div class="text-xs leading-6 text-muted mb-2 pb-0.5 border-b border-gray-200">NCAA Football</div>
                 <ul role="list" class="ml-0.5 space-y-1">
@@ -150,15 +178,17 @@
                             {{ __('Teams') }}
                         </x-nav-link>
                     </li>
-                    @foreach(auth()->user()->favorites() as $team)
-                    <li class="pl-2.5">
-                        <a href="{{ route('team', $team->id ) }}" class="flex flex-row cursor-pointer hover:font-semibold items-center text-dark group flex gap-x-3 p-2 text-sm">
-                            <x-bi-arrow-return-right class="w-4 h-5"/>
-                            <img src="{{ $team->logo }}" class="h-4 w-4"/>
-                            {{ $team->abbreviation }}
-                        </a>
-                    </li>
-                    @endforeach
+                    @if(auth()->check() && count(auth()->user()->teams) > 0)
+                      @foreach(auth()->user()->favorites() as $team)
+                      <li class="pl-2.5">
+                          <a href="{{ route('team', $team->id ) }}" class="flex flex-row cursor-pointer hover:font-semibold items-center text-dark group flex gap-x-3 p-2 text-sm">
+                              <x-bi-arrow-return-right class="w-4 h-4 text-muted"/>
+                              <img src="{{ $team->logo }}" class="h-4 w-4"/>
+                              {{ $team->abbreviation }}
+                          </a>
+                      </li>
+                      @endforeach
+                    @endif
                 </ul>
             </li>
             @admin
