@@ -1,20 +1,37 @@
-<div>
+<div x-data="{creating: 'none'}">
 
     <div class="flex flex-col md:flex-row md:items-center md:justify-between w-full mb-4">
 
-        <div class="text-dark">
-            Lobby
+        <div 
+            x-text="creating == 'group' ? 'Create a Group' : (creating == 'contest' ? 'Create a Contest' : 'Lobby')"
+            class="text-dark">
         </div>
 
-        <div class="flex flex-row items-end space-x-4">
-            <x-button action="createGroup" color="blue">Create a Group</x-button>
-            <x-button action="createContest" color="blue">Create a Contest</x-button>
+        <div 
+            x-show="creating == 'none'"
+            class="flex flex-row items-end space-x-4">
+            <x-button @click="creating = 'group'" color="blue">Create a Group</x-button>
+            <x-button @click="creating = 'contest'" color="blue">Create a Contest</x-button>
         </div>
 
     </div>
 
     <!-- Wrapping Grid -->
-    <div class="mx-auto grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-4 items-start">
+    <div 
+        x-show="creating == 'group'"
+        class="">
+        <x-button @click="creating = 'none'" color="red" outline>Cancel</x-button>
+    </div>
+    <div 
+        x-show="creating == 'contest'"
+        class="">
+        <x-button @click="creating = 'none'" color="red" outline>Cancel</x-button>
+    </div>
+
+    <!-- Wrapping Grid -->
+    <div 
+        x-show="creating == 'none'"
+        class="mx-auto grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-4 items-start">
 
         <div class="flex flex-col rounded-lg bg-white shadow px-4 py-3 lg:col-span-4">
 
