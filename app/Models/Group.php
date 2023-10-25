@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\GroupTrait;
 
 class Group extends Model
 {
-    use HasUuids;
+    use HasUuids, GroupTrait;
 
     protected $fillable = [
         'name',

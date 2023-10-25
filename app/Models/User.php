@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Traits\UserTrait;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-    use HasUuids, Notifiable;
+    use HasUuids, Notifiable, UserTrait;
 
     protected $guarded = [];
 
@@ -23,15 +25,5 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'teams' => 'array'
     ];
-
-    public function isAdmin()
-    {
-        return $this->admin;
-    }
-
-    public function favorites()
-    {
-        return Team::whereIn('id', $this->teams)->get();
-    }
 
 }

@@ -1,17 +1,18 @@
 <?php
 
 use App\Livewire\Rankings;
-use App\Livewire\Schedule;
 use App\Livewire\ShowGame;
 use App\Livewire\ShowTeam;
+use App\Livewire\Pickem\ShowGroup;
+use App\Livewire\Scoreboard;
+use App\Livewire\Teams;
+
+use App\Livewire\Pickem\Lobby;
 
 use App\Livewire\Feeds\Feeds;
 use App\Livewire\Feeds\ShowFeed;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeedController;
-use App\Livewire\Scoreboard;
-use App\Livewire\Standings;
-use App\Livewire\Teams;
 
 // Autenticated user must be verified
 Route::middleware(['verified'])->group(function () {
@@ -25,6 +26,10 @@ Route::middleware(['verified'])->group(function () {
     Route::get('/teams', Teams::class)->name('teams');
     Route::get('/teams/{team}', ShowTeam::class)->name('team');
     Route::get('/rankings', Rankings::class)->name('rankings');
+
+    Route::get('/lobby', Lobby::class)->name('lobby');
+
+    Route::get('/groups/{group}', ShowGroup::class)->name('group');
 
     // Route::get('/schedule', Schedule::class)->name('schedule');
     // Route::get('/standings', Standings::class)->name('standings');
