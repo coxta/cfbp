@@ -25,19 +25,12 @@ class RecordTypeSeeder extends Seeder
         $publicGroupType = RecordType::create([
             'name' => 'Public',
             'model' => 'Group',
-            'description' => 'Public groups'
+            'description' => 'Anyone can join or leave at any time'
         ]);
         $privateGroupType = RecordType::create([
             'name' => 'Private',
             'model' => 'Group',
-            'description' => 'Private groups'
-        ]);
-
-        // The master group
-        $masterGroup = Group::create([
-            'name' => 'Master',
-            'type_id' => $masterGroupType->id,
-            'user_id' => User::where('admin', true)->first()->id,
+            'description' => 'Members join by invition or with a group password'
         ]);
 
         // Member Types
@@ -57,13 +50,6 @@ class RecordTypeSeeder extends Seeder
             'description' => 'Members for a Group'
         ]);
 
-        // The master group commissioner
-        $commissioner = Member::create([
-            'group_id' => $masterGroup->id,
-            'type_id' => $memberCommishType->id,
-            'user_id' => $masterGroup->user_id
-        ]);
-
         // Contest Types
         $classicContestType = RecordType::create([
             'name' => 'Classic',
@@ -79,6 +65,13 @@ class RecordTypeSeeder extends Seeder
             'name' => 'Tiered Spreads',
             'model' => 'Contest',
             'description' => 'Pick winners against the spread in 15 tiered games.  Tier 1 = 1pt, Tier 2 = 2pts, Tier 3 = 3pts.'
+        ]);
+
+        // The master group
+        $masterGroup = Group::create([
+            'name' => 'Master',
+            'type_id' => $masterGroupType->id,
+            'user_id' => User::where('admin', true)->first()->id,
         ]);
 
     }

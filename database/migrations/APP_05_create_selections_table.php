@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('game_id')->references('id')->on('games')->constrained();
-            $table->foreign('contest_id')->references('id')->on('contests')->constrained();
+            $table->foreign('contest_id')->references('id')->on('contests')->constrained()->onDelete('cascade');
             $table->foreign('favorite_id')->references('id')->on('teams')->constrained();
 
         });
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contest_games');
+        Schema::dropIfExists('selections');
     }
 };

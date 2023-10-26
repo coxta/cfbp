@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedMediumInteger('tiebreaker');
             $table->timestamps();
 
-            $table->foreign('contest_id')->references('id')->on('contests')->constrained();
-            $table->foreign('member_id')->references('id')->on('members')->constrained();
+            $table->foreign('contest_id')->references('id')->on('contests')->constrained()->onDelete('cascade');
+            $table->foreign('member_id')->references('id')->on('members')->constrained()->onDelete('cascade');
 
         });
     }

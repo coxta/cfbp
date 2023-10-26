@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('balance', 8, 2)->default(0);
             $table->timestamps();
 
-            $table->foreign('group_id')->references('id')->on('groups')->constrained();
+            $table->foreign('group_id')->references('id')->on('groups')->constrained()->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->constrained();
             $table->foreign('type_id')->references('id')->on('record_types')->constrained();
 

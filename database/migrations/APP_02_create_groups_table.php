@@ -19,7 +19,7 @@ return new class extends Migration
             $table->json('options')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->constrained();
+            $table->foreign('user_id')->references('id')->on('users')->constrained()->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('record_types')->constrained();
 
         });

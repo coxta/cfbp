@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('type_id');
             $table->timestamps();
 
-            $table->foreign('group_id')->references('id')->on('groups')->constrained();
+            $table->foreign('group_id')->references('id')->on('groups')->constrained()->onDelete('cascade');
             $table->foreign('week_id')->references('id')->on('weeks')->constrained();
             $table->foreign('type_id')->references('id')->on('record_types')->constrained();
 

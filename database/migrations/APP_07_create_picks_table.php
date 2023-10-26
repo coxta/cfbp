@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedMediumInteger('pick');
             $table->timestamps();
 
-            $table->foreign('entry_id')->references('id')->on('entries')->constrained();
-            $table->foreign('selection_id')->references('id')->on('selections')->constrained();
+            $table->foreign('entry_id')->references('id')->on('entries')->constrained()->onDelete('cascade');
+            $table->foreign('selection_id')->references('id')->on('selections')->constrained()->onDelete('cascade');
 
         });
     }
