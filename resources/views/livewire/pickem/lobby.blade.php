@@ -1,27 +1,20 @@
-<div x-data="{creating: 'none'}">
+<div x-data="{creating: 'none'}" @create-group-cancel.window="creating = 'none'">
 
-    <div class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:items-center md:justify-between w-full mb-4">
+    <div x-show="creating == 'none'" class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:items-center md:justify-between w-full mb-4">
 
-        <div 
-            x-text="creating == 'group' ? 'Create a Group' : (creating == 'contest' ? 'Create a Contest' : 'Lobby')"
-            class="text-dark">
-        </div>
-
-        <div 
-            x-show="creating == 'none'"
-            class="flex flex-row items-center space-x-4">
+        <h2 class="text-dark">Lobby</h2>
+        
+        <div>
             <x-button @click="creating = 'group'" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
             <x-button @click="creating = 'contest'" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
         </div>
 
     </div>
-
-    <!-- Wrapping Grid -->
-    <div 
-        x-show="creating == 'group'"
-        class="">
-        <x-button @click="creating = 'none'" color="red" outline>Cancel</x-button>
+    
+    <div x-show="creating == 'group'">
+        <livewire:pickem.new-group />
     </div>
+
     <div 
         x-show="creating == 'contest'"
         class="">
