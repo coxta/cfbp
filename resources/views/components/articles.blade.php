@@ -35,7 +35,7 @@
               </div>
               <div class="flex-1 bg-white p-6 flex flex-col justify-between">
                   <div class="flex-1">
-                      <a href="{{ $story->link }}" target="_blank" class="block mt-2">
+                      <a href="{{ route('article', $story->id) }}" class="block mt-2">
                           <p class="text-xl font-semibold text-gray-900">
                               {{ $story->headline }}
                           </p>

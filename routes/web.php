@@ -13,6 +13,7 @@ use App\Livewire\Feeds\Feeds;
 use App\Livewire\Feeds\ShowFeed;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeedController;
+use App\Livewire\ViewArticle;
 
 // Autenticated user must be verified
 Route::middleware(['verified'])->group(function () {
@@ -20,6 +21,8 @@ Route::middleware(['verified'])->group(function () {
     Route::get('/', function () {
         return view('home');
     })->name('home');
+
+    Route::get('/articles/{article}', ViewArticle::class)->name('article');
 
     Route::get('/games', Scoreboard::class)->name('games');
     Route::get('/games/{game}', ShowGame::class)->name('game');

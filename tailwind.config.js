@@ -1,6 +1,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 const colors = require("tailwindcss/colors");
 import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -56,5 +57,5 @@ export default {
         },
     },
 
-    plugins: [forms],
+    plugins: [forms, typography],
 };

@@ -2,17 +2,10 @@
 
     @if(isset($headline))
     <div class="flex flex-col bg-white rounded-lg shadow overflow-hidden mb-4 p-6 justify-between">
-        <div class="flex-1">
-            <p class="text-lg font-semibold text-gray-900">
-                {{ $headline }}
-            </p>
-            {{-- <p class="mt-3 text-sm text-gray-500">
-                {{ $description }}s
-            </p> --}}
-        </div>
-        <div class="mt-6 text-xs text-gray-700 game-story">
+        <article class="prose max-w-none">
+            <h2>{{ $headline }}</h2>
             {!! $story !!}
-        </div>
+        </article>
     </div>
     @endif
     
