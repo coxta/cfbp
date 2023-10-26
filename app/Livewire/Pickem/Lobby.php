@@ -4,17 +4,21 @@ namespace App\Livewire\Pickem;
 
 use Livewire\Component;
 use App\Models\Group;
-use App\Models\User;
 
 class Lobby extends Component
 {
 
     public $publicGroups, $myGroups;
+    public $publicContests, $myContests;
 
     public function render()
     {
-        $this->publicGroups = Group::public()->get();
-        $this->myGroups = auth()->user()->groups()->get() ?? null;
+        $this->publicGroups = Group::public()->get() ?? [];
+        if(auth()->check()) {
+            $this->myGroups = auth()->user()->groups()->get() ?? [];
+        } else {
+            $this->myGroups = [];
+        }
         return view('livewire.pickem.lobby');
     }
 }

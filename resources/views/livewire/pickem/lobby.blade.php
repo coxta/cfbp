@@ -50,7 +50,9 @@
                     @endforeach
                 </div>
             @else
-                <div>No groups...</div>
+                <div class="m-4 text-sm text-muted">
+                    No groups...
+                </div>
             @endif
         
         </div>
@@ -59,7 +61,7 @@
 
             <h2 class="text-slate-700 font-semibold text-sm pb-2">Contests</h2>
         
-            <x-under-construction size="16" class="py-12" />
+            {{-- <x-under-construction size="16" class="py-12" /> --}}
         
         </div>
 
