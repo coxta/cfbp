@@ -1,13 +1,17 @@
-<div x-data="{creating: 'none'}" @create-group-cancel.window="creating = 'none'">
+<div x-data>
 
-    <div x-show="creating == 'none'" class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:items-center md:justify-between w-full mb-4">
+    <livewire:pickem.new-group />
+
+    {{-- <livewire:pickem.new-contest /> --}}
+
+    <div class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:items-center md:justify-between w-full mb-4">
 
         <h2 class="text-dark">Lobby</h2>
         
         <div>
             @auth
-                <x-button @click="creating = 'group'" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
-                <x-button @click="creating = 'contest'" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
+                <x-button @click="$dispatch('create-group')" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
+                <x-button @click="$dispatch('create-group')" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
             @else
                 <x-button link="{{ route('login', ['from' => 'lobby']) }}" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
                 <x-button link="{{ route('login', ['from' => 'lobby']) }}" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
@@ -15,21 +19,9 @@
         </div>
 
     </div>
-    
-    <div x-show="creating == 'group'">
-        <livewire:pickem.new-group />
-    </div>
-
-    <div 
-        x-show="creating == 'contest'"
-        class="">
-        <x-button @click="creating = 'none'" color="red" outline>Cancel</x-button>
-    </div>
 
     <!-- Wrapping Grid -->
-    <div 
-        x-show="creating == 'none'"
-        class="mx-auto grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-4 items-start">
+    <div class="mx-auto grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-4 items-start">
 
         <div class="flex flex-col rounded-lg bg-white shadow px-4 py-3 lg:col-span-4">
 
