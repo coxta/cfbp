@@ -23,6 +23,8 @@ class ViewArticle extends Component
 
         $story = $api['story'] ?? $article->story;
 
+        // $story = str_replace("\n\n\r\n", "<br><br>", $story);
+
         foreach ($photos as $key => $photo) {
             $element = '<photo' . $key + 1 . '>';
             $story = str_replace($element, '<img src="'. $photo['url'] . '" height="'. $photo['height'] . '" width="'. $photo['width'] . '" alt="'. $photo['name'] . '">', $story);

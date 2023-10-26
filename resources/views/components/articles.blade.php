@@ -11,7 +11,7 @@
                   <img class="w-full h-16 object-cover object-center" src="{{ $preview->image }}" alt="">
               </div>
               <div class="flex-1 bg-white p-2 text-xs text-gray-700 flex flex-col justify-between">
-                  <a href="{{ $preview->link }}" target="_blank" class="hover:font-semibold hover:text-gray-900">
+                  <a href="{{ route('article', $preview->id) }}" class="hover:font-semibold hover:text-gray-900">
                       {{ $preview->headline }}
                   </a>
               </div>
@@ -82,7 +82,7 @@
             @foreach ($headlines as $headline)
 
                 <div class="text-gray-700 px-3 py-2">
-                    <a href="{{ $headline->link }}" target="_blank" class="flex text-xs font-light hover:font-semibold hover:text-blue-700">
+                    <a href="{{ route('article', $headline->id) }}" class="flex text-xs font-light hover:font-semibold hover:text-blue-700">
                         {{ $headline->headline }}
                     </a>
                 </div>
