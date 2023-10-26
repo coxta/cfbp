@@ -12,14 +12,33 @@ class NewGroup extends Component
     public Group $group;
     public $typeOptions;
 
-    protected $rules = [
-        'group.name' => 'required|string|min:3|max:50',
-        'group.type_id' => 'required|string|min:3|max:50',
-    ];
+    public function rules() {
+        return [
+            'group.name' => 'required|string|min:3|max:100|unique:groups,name',
+            'group.type_id' => 'required|string|min:36|max:36',
+            'group.user_id' => 'required|string|min:36|max:36',
+        ];
+    }
+
+    public function messages() 
+    {
+        return [
+            'group.name.unique' => 'Sorry, this name has been taken'
+        ];
+    }
 
     public function mount()
     {
-        
+        $this->fresh();
+    }
+
+    public function render()
+    {
+        return view('livewire.pickem.new-group');
+    }
+
+    public function fresh()
+    {
         $this->group = new Group;
 
         $this->typeOptions = RecordType::select([
@@ -39,14 +58,20 @@ class NewGroup extends Component
             }
         }
 
-    }
-    public function render()
-    {
-        return view('livewire.pickem.new-group');
+        $this->group->user_id = auth()->id();
     }
 
     public function cancel()
     {
         $this->dispatch('create-group-cancelled'); 
+    }
+
+    public function create()
+    {
+        
+        $this->validate();
+        $this->group->save();
+
+        return redirect()->route('group', $this->group->id);
     }
 }

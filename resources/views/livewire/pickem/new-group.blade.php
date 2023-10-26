@@ -24,7 +24,7 @@
             From: "opacity-100 translate-y-0 sm:scale-100"
             To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         -->
-        <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all my-8 w-full max-w-lg p-6">
+        <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all my-8 w-full max-w-xl p-6">
             <div class="flex flex-row items-center justify-between">
                 <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Create a Group</h3>
                 <button @click="creating = false" type="button" class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -35,15 +35,19 @@
                 </button>
             </div>
             
-            <div class="flex flex-col space-y-4 mt-2 w-full text-left">
-                <x-input.text wire:model.blur="group.name" label="Group Name" placeholder="Enter group name"/>
-                <x-input.radio 
-                    wire:model.live="group.type_id" 
+            <div class="flex flex-col space-y-6 mt-2 w-full text-left">
+                <x-input.text wire:model.blur="group.name" label="Group Name" placeholder="Enter group name"/>                
+                <x-input.choice 
+                    wire:model.live="group.type_id"
+                    :current="$group->type_id"
+                    columns="2"
                     label="Group Type"
                     :options="$typeOptions" />
             </div>
         <div class="mt-8 flex flex-row items-center justify-around">
-            <button type="button" class="inline-flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-accent sm:ml-3 sm:w-auto">Create Group</button>
+            <x-button action="create" color="blue">
+                Create {{ $group->type->name }} Group
+            </x-button>
         </div>
         </div>
     </div>

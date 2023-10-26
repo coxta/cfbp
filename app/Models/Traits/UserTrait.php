@@ -21,9 +21,10 @@ trait UserTrait
 
     public function groups()
     {
-        return Group::whereHas('members', function (Builder $query) {
-            $query->where('user_id', $this->id);
-        });
+        return Group::where('name', '<>', 'Master')
+            ->whereHas('members', function (Builder $query) {
+                $query->where('user_id', $this->id);
+            });
     }
 
 }
