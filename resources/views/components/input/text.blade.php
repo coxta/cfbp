@@ -30,7 +30,7 @@
         x-bind:disabled="disabled"
         placeholder="{{ $attributes['placeholder'] }}"
         :class="{ 'bg-transparent pointer-events-none' : disabled }"
-        class="block w-full border-gray-300 rounded-md shadow focus:outline-none text-sm
+        class="block w-full border-gray-300 rounded-md focus:outline-none text-sm
             @error($model)
                 {{ 'text-red-600 border-red-500 focus:ring-1 focus:ring-red-400 focus:border-red-400' }}
             @else
