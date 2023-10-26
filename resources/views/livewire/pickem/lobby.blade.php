@@ -5,8 +5,13 @@
         <h2 class="text-dark">Lobby</h2>
         
         <div>
-            <x-button @click="creating = 'group'" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
-            <x-button @click="creating = 'contest'" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
+            @auth
+                <x-button @click="creating = 'group'" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
+                <x-button @click="creating = 'contest'" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
+            @else
+                <x-button link="{{ route('login', ['from' => 'lobby']) }}" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
+                <x-button link="{{ route('login', ['from' => 'lobby']) }}" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
+            @endif
         </div>
 
     </div>

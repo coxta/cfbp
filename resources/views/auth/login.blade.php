@@ -18,6 +18,9 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
+            <!-- Return somewhere specific? -->
+            <input type="hidden" id="from" name="from" value="{{ $from }}">
+
             <!-- Email Address -->
             <div>
                 <x-label for="email" :value="__('Email')" />
