@@ -8,7 +8,7 @@
 
         <h2 class="text-dark">Lobby</h2>
         
-        <div>
+        <div class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-4">
             @auth
                 <x-button @click="$dispatch('create-group')" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
                 <x-button @click="$dispatch('create-group')" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>

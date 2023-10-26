@@ -24,26 +24,26 @@
             From: "opacity-100 translate-y-0 sm:scale-100"
             To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         -->
-        <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-        <div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
-            <button @click="creating = false" type="button" class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                <span class="sr-only">Close</span>
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-        <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+        <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all my-8 w-full max-w-lg p-6">
+            <div class="flex flex-row items-center justify-between">
                 <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Create a Group</h3>
-                <div class="flex flex-col space-x-2 mt-2">
-                    <x-input.text wire:model="group.name" label="Name"/>
-                </div>
+                <button @click="creating = false" type="button" class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <span class="sr-only">Close</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
-        </div>
-        <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+            
+            <div class="flex flex-col space-y-4 mt-2 w-full text-left">
+                <x-input.text wire:model.blur="group.name" label="Group Name" placeholder="Enter group name"/>
+                <x-input.radio 
+                    wire:model.live="group.type_id" 
+                    label="Group Type"
+                    :options="$typeOptions" />
+            </div>
+        <div class="mt-8 flex flex-row items-center justify-around">
             <button type="button" class="inline-flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-accent sm:ml-3 sm:w-auto">Create Group</button>
-            <button @click="creating = false" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
         </div>
         </div>
     </div>
