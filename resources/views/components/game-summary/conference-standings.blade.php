@@ -28,7 +28,7 @@
                                 {{ $team['stats'][1]['displayValue'] }}
                             </td>
                             <td class="whitespace-nowrap py-1.5 text-right">
-                                {{ $team['stats'][1]['displayValue'] }}
+                                {{ $team['stats'][0]['displayValue'] }}
                             </td>
                         </tr>
         
@@ -61,7 +61,7 @@
                         {{ $team['stats'][1]['displayValue'] }}
                     </td>
                     <td class="whitespace-nowrap py-1.5 text-right">
-                        {{ $team['stats'][1]['displayValue'] }}
+                        {{ $team['stats'][0]['displayValue'] }}
                     </td>
                 </tr>
 
