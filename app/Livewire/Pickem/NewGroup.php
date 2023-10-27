@@ -72,6 +72,8 @@ class NewGroup extends Component
         $this->validate();
         $this->group->save();
 
+        session()->flash('new-group', true);
+
         return redirect()->route('group', $this->group->id);
     }
 }
