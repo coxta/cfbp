@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('selections', function (Blueprint $table) {
+
             $table->uuid('id')->primary();
             $table->uuid('contest_id');
             $table->unsignedInteger('game_id')->constrained();
@@ -19,10 +20,14 @@ return new class extends Migration
             $table->float('spread', 4, 1);
             $table->unsignedTinyInteger('points');
             $table->timestamps();
+            $table->softDeletes();
+            $table->boolean('archived')->storedAs('IF(deleted_at IS NULL, 0, 1)')->nullable();
 
             $table->foreign('game_id')->references('id')->on('games')->constrained();
-            $table->foreign('contest_id')->references('id')->on('contests')->constrained()->onDelete('cascade');
+            $table->foreign('contest_id')->references('id')->on('contests')->constrained();
             $table->foreign('favorite_id')->references('id')->on('teams')->constrained();
+
+            $table->unique(['contest_id','game_id','deleted_at']);
 
         });
     }

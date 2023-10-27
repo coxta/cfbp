@@ -6,22 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
-        Schema::create('record_types', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name', 50);
-            $table->string('model', 50);
-            $table->string('description');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
             $table->softDeletes();
             $table->boolean('archived')->storedAs('IF(deleted_at IS NULL, 0, 1)')->nullable();
-
-            $table->unique(['model','name','deleted_at']);
-            
         });
     }
 
@@ -30,6 +20,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('record_types');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('archived');
+            $table->dropSoftDeletes();
+        });
     }
 };

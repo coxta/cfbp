@@ -7,12 +7,20 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Traits\CascadeSoftDeletes;
+
 use App\Models\Traits\UserTrait;
 
-class User extends Authenticatable implements MustVerifyEmail
+/**
+ * Add this back when ready
+ * 
+ * class User extends Authenticatable implements MustVerifyEmail
+ */
+class User extends Authenticatable
 {
 
-    use HasUuids, Notifiable, UserTrait;
+    use HasUuids, Notifiable, UserTrait, SoftDeletes, CascadeSoftDeletes;
 
     protected $guarded = [];
 

@@ -12,13 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contests', function (Blueprint $table) {
+
             $table->uuid('id')->primary();
             $table->uuid('group_id');
             $table->uuid('week_id');
             $table->uuid('type_id');
             $table->timestamps();
+            $table->softDeletes();
+            $table->boolean('archived')->storedAs('IF(deleted_at IS NULL, 0, 1)')->nullable();
 
-            $table->foreign('group_id')->references('id')->on('groups')->constrained()->onDelete('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->constrained();
             $table->foreign('week_id')->references('id')->on('weeks')->constrained();
             $table->foreign('type_id')->references('id')->on('record_types')->constrained();
 

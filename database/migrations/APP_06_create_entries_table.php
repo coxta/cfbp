@@ -12,15 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('entries', function (Blueprint $table) {
+            
             $table->uuid('id')->primary();
             $table->uuid('contest_id');
             $table->uuid('member_id');
             $table->string('name', 50);
             $table->unsignedMediumInteger('tiebreaker');
             $table->timestamps();
+            $table->softDeletes();
+            $table->boolean('archived')->storedAs('IF(deleted_at IS NULL, 0, 1)')->nullable();
 
-            $table->foreign('contest_id')->references('id')->on('contests')->constrained()->onDelete('cascade');
-            $table->foreign('member_id')->references('id')->on('members')->constrained()->onDelete('cascade');
+            $table->foreign('contest_id')->references('id')->on('contests')->constrained();
+            $table->foreign('member_id')->references('id')->on('members')->constrained();
 
         });
     }

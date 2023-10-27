@@ -5,32 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\GroupTrait;
-use App\Models\Member;
+use App\Models\Traits\HasRecordTypes;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Traits\CascadeSoftDeletes;
 
 class Group extends Model
 {
-    use HasUuids, GroupTrait;
+    use HasUuids, GroupTrait, HasRecordTypes, SoftDeletes, CascadeSoftDeletes;
+
+    protected $cascadeDeletes = [
+        'members'
+    ];
 
     protected $fillable = [
         'name',
         'type_id',
-        'user_id'
+        'user_id',
+        'options'
     ];
 
     protected $casts = [
         'options' => 'array',
     ];
 
-    protected static function booted(): void
-    {
-        static::created(function (Group $group) {
-
-            // Always create the commissioner member when a group is created
-            Member::create([
-                'group_id' => $group->id,
-                'type_id' => RecordType::where('model','Member')->where('name', 'Commissioner')->first()->id,
-                'user_id' => $group->user_id
-            ]);
-        });
-    }
 }
