@@ -7,6 +7,13 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+use App\Models\User;
+use App\Observers\UserObserver;
+use App\Models\Group;
+use App\Observers\GroupObserver;
+use App\Models\RecordType;
+use App\Observers\RecordTypeObserver;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -18,6 +25,17 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+    ];
+
+    /**
+     * Model observers
+     *
+     * @var array
+     */
+    protected $observers = [
+        User::class => [UserObserver::class],
+        Group::class => [GroupObserver::class],
+        RecordType::class => [RecordTypeObserver::class],
     ];
 
     /**
@@ -35,4 +53,5 @@ class EventServiceProvider extends ServiceProvider
     {
         return false;
     }
+
 }
