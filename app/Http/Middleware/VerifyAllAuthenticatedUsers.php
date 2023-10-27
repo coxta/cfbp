@@ -16,9 +16,12 @@ class VerifyAllAuthenticatedUsers
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && $request->user() instanceof MustVerifyEmail && ! $request->user()->hasVerifiedEmail()) {
-            return redirect()->route('verification.notice');
-        }
+        /**
+         * Turn this back on when ready
+         */
+        // if ($request->user() && $request->user() instanceof MustVerifyEmail && ! $request->user()->hasVerifiedEmail()) {
+        //     return redirect()->route('verification.notice');
+        // }
         return $next($request);
 
     }
