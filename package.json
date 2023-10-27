@@ -2,7 +2,6 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "local": "sudo rm -rf vendor.nosync && sudo rm -rf vendor && mkdir vendor.nosync && ln -s vendor.nosync vendor && composer install && sudo rm -rf node_modules.nosync && sudo rm -rf node_modules && mkdir node_modules.nosync && ln -s node_modules.nosync node_modules && npm install",
         "dev": "vite",
         "build": "vite build"
     },
