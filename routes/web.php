@@ -34,7 +34,9 @@ Route::middleware(['verified'])->group(function () {
 
     Route::get('/groups/{group}', ShowGroup::class)->name('group');
 
-    // Route::get('/schedule', Schedule::class)->name('schedule');
+    Route::get('/flare', function () {
+        return NonExistentModel::find('nothing');
+    })->name('flare');
     // Route::get('/standings', Standings::class)->name('standings');
 
 });
