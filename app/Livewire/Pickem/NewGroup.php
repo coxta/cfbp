@@ -3,6 +3,7 @@
 namespace App\Livewire\Pickem;
 
 use Livewire\Component;
+use Illuminate\Validation\Rule;
 use App\Models\Group;
 use App\Models\RecordType;
 
@@ -12,9 +13,17 @@ class NewGroup extends Component
     public Group $group;
     public $typeOptions;
 
+    // 'group.name' => 'required|string|min:3|max:100|unique:groups,name',
+
     public function rules() {
         return [
-            'group.name' => 'required|string|min:3|max:100|unique:groups,name',
+            'group.name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:100',
+                Rule::unique('groups','name')->whereNull('deleted_at')
+            ],
             'group.type_id' => 'required|string|min:36|max:36',
             'group.user_id' => 'required|string|min:36|max:36',
         ];

@@ -20,4 +20,10 @@ class ShowGroup extends Component
     {
         return view('livewire.pickem.show-group');
     }
+
+    public function delete()
+    {
+        $this->group->delete();
+        return redirect()->route('lobby');
+    }
 }
