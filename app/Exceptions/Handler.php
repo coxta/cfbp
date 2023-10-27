@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Masmerise\Toaster\Toaster;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -24,7 +25,7 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            //
+            Toaster::error('Oops, an error occurred.  We\'ll get that fixed as soon as we can.');
         });
     }
 }
