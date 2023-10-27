@@ -94,7 +94,7 @@
                         @if(auth()->check() && count(auth()->user()->teams) > 0)
                           @foreach(auth()->user()->favorites() as $team)
                           <li class="pl-2.5">
-                              <a href="{{ route('team', $team->id ) }}" class="flex flex-row cursor-pointer hover:font-semibold items-center text-dark group flex gap-x-3 p-2 text-sm">
+                              <a href="{{ route('team', $team->id ) }}" class="flex flex-row cursor-pointer hover:font-semibold items-center text-dark gap-x-3 p-2 text-sm">
                                   <x-bi-arrow-return-right class="w-4 h-4 text-muted"/>
                                   <img src="{{ $team->logo }}" class="h-4 w-4"/>
                                   {{ $team->abbreviation }}
@@ -181,7 +181,7 @@
                     @if(auth()->check() && count(auth()->user()->teams) > 0)
                       @foreach(auth()->user()->favorites() as $team)
                       <li class="pl-2.5">
-                          <a href="{{ route('team', $team->id ) }}" class="flex flex-row cursor-pointer hover:font-semibold items-center text-dark group flex gap-x-3 p-2 text-sm">
+                          <a href="{{ route('team', $team->id ) }}" class="flex flex-row cursor-pointer hover:font-semibold items-center text-dark gap-x-3 p-2 text-sm">
                               <x-bi-arrow-return-right class="w-4 h-4 text-muted"/>
                               <img src="{{ $team->logo }}" class="h-4 w-4"/>
                               {{ $team->abbreviation }}

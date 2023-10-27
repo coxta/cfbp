@@ -13,9 +13,9 @@ class Lobby extends Component
 
     public function render()
     {
-        $this->publicGroups = Group::public()->get() ?? [];
+        $this->publicGroups = Group::public()->withCount('members')->get() ?? [];
         if(auth()->check()) {
-            $this->myGroups = auth()->user()->groups()->get() ?? [];
+            $this->myGroups = auth()->user()->groups()->withCount('members')->get() ?? [];
         } else {
             $this->myGroups = [];
         }
