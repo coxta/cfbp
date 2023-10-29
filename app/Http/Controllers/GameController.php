@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Team;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class GameController extends Controller
 {
