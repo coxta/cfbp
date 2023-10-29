@@ -2,14 +2,14 @@
 
 namespace App\Livewire;
 
-use App\Models\Team;
-use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\TeamController;
 
 class ShowTeam extends Component
 {
 
+    public $id;
     public $team;
     public $games;
     public $articles = [];
@@ -35,16 +35,17 @@ class ShowTeam extends Component
         'avgPointsAgainst' => 'Avg Allowed'
     ];
 
-    public function mount(Team $team)
+    public function mount($team)
     {
-        $this->team = $team;
-        $this->games = $this->team->games()->get();
-        $this->loadNews();
-        $this->cleanStats();
+        $this->id = $team;
     }
 
     public function render()
     {
+        $this->team = TeamController::sync($this->id);
+        $this->games = $this->team->games()->get();
+        $this->loadNews();
+        $this->cleanStats();
         return view('livewire.show-team');
     }
 
