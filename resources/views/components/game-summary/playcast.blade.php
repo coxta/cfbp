@@ -185,65 +185,67 @@
 
                 @foreach($drives['previous'] as $drive)
 
-                    <div x-data="{ open: false }" class="flex flex-col">
-                        <div x-on:click="open = ! open" class="flex flex-row items-center space-x-4 my-2 cursor-pointer">
-                            <x-heroicon-s-chevron-right x-show="open == false" class="w-4 h-4 text-gray-700" />
-                            <x-heroicon-s-chevron-down x-show="open" class="w-4 h-4 text-gray-700" />
-                            <img src="{{ $drive['team']['logos'][0]['href'] }}" class="w-6 h-6"/>
-                            <div class="flex flex-col text-xs">
-                                <div class="font-semibold text-gray-900 uppercase">
-                                    {{ $drive['displayResult'] }}
-                                </div>
-                                <div class="font-normal text-gray-700">
-                                    {{ $drive['description'] }}
+                    @if($drive['offensivePlays'] > 0)
+                        <div x-data="{ open: false }" class="flex flex-col">
+                            <div x-on:click="open = ! open" class="flex flex-row items-center space-x-4 my-2 cursor-pointer">
+                                <x-heroicon-s-chevron-right x-show="open == false" class="w-4 h-4 text-gray-700" />
+                                <x-heroicon-s-chevron-down x-show="open" class="w-4 h-4 text-gray-700" />
+                                <img src="{{ $drive['team']['logos'][0]['href'] }}" class="w-6 h-6"/>
+                                <div class="flex flex-col text-xs">
+                                    <div class="font-semibold text-gray-900 uppercase">
+                                        {{ $drive['displayResult'] }}
+                                    </div>
+                                    <div class="font-normal text-gray-700">
+                                        {{ $drive['description'] }}
+                                    </div>
                                 </div>
                             </div>
+                            <div x-show="open" x-transition x-cloak>
+
+                                @foreach($drive['plays'] as $play)
+
+                                    @if(isset($play['start']['downDistanceText']) && isset($play['text']))
+
+                                        @php
+                                            switch ($play['period']['number']) {
+                                                case 1:
+                                                    $q = '1st';
+                                                    break;
+                                                case 2:
+                                                    $q = '2nd';
+                                                    break;
+                                                case 3:
+                                                    $q = '3rd';
+                                                    break;
+                                                default:
+                                                    $q = '4th';
+                                                    break;
+                                            }
+                                        @endphp
+
+                                        <div class="flex flex-col space-y-1 py-2 {{ $loop->last ? '' : 'border-b border-gray-200' }}">
+                                            <div class="text-xs text-gray-900 font-bold">
+                                                {{ $play['start']['downDistanceText'] ?? null }}
+                                            </div>
+                                            <div class="text-xs text-gray-600">
+                                                {{ '(' . $play['clock']['displayValue'] . ' - ' . $q . ') ' . $play['text'] ?? null }}
+                                            </div>
+                                        </div>
+                                    @else
+
+                                        <div class="flex flex-col py-1 {{ $loop->last ? '' : 'border-b border-gray-200' }}">
+                                            <div class="text-xs text-gray-900 font-bold">
+                                                {{ $play['text'] ?? null }}
+                                            </div>
+                                        </div>
+
+                                    @endif
+
+                                @endforeach
+
+                            </div>
                         </div>
-                        <div x-show="open" x-transition x-cloak>
-
-                            @foreach($drive['plays'] as $play)
-
-                                @if(isset($play['start']['downDistanceText']) && isset($play['text']))
-
-                                    @php
-                                        switch ($play['period']['number']) {
-                                            case 1:
-                                                $q = '1st';
-                                                break;
-                                            case 2:
-                                                $q = '2nd';
-                                                break;
-                                            case 3:
-                                                $q = '3rd';
-                                                break;
-                                            default:
-                                                $q = '4th';
-                                                break;
-                                        }
-                                    @endphp
-
-                                    <div class="flex flex-col space-y-1 py-2 {{ $loop->last ? '' : 'border-b border-gray-200' }}">
-                                        <div class="text-xs text-gray-900 font-bold">
-                                            {{ $play['start']['downDistanceText'] ?? null }}
-                                        </div>
-                                        <div class="text-xs text-gray-600">
-                                            {{ '(' . $play['clock']['displayValue'] . ' - ' . $q . ') ' . $play['text'] ?? null }}
-                                        </div>
-                                    </div>
-                                @else
-
-                                    <div class="flex flex-col py-1 {{ $loop->last ? '' : 'border-b border-gray-200' }}">
-                                        <div class="text-xs text-gray-900 font-bold">
-                                            {{ $play['text'] ?? null }}
-                                        </div>
-                                    </div>
-
-                                @endif
-
-                            @endforeach
-
-                        </div>
-                    </div>
+                    @endif
 
                 @endforeach
             
