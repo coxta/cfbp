@@ -6,21 +6,26 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use App\Models\Team;
+use App\Models\Game;
 
 class TeamController extends Controller
 {
-    public static function sync(int $team) : Team
+    public static function sync(int $id) : Team
     {
 
-        $team = Team::find($team);
-
+        $team = Team::findOr($id, function () use($id) {
+            $new = new Team;
+            $new->id = $id;
+            return $new;
+        });
+        
         try {
-
+            
             $response = Http::get(config('espn.team') . $team->id);
             $data = $response->json()['team'] ?? null;
-
+            
             if(!$data) return $team;
-
+             
             $conference = null;
             $division = null;
 
@@ -36,27 +41,7 @@ class TeamController extends Controller
 
             $conference_standing = $data['standingSummary'] ?? null;
 
-            $wins = 0;
-            $losses = 0;
-            $conference_wins = 0;
-            $conference_losses = 0;
-
-            if($stats) {
-                foreach ($stats as $stat) {
-                    if($stat['name'] == 'wins') {
-                        $wins = $stat['value'];
-                    }
-                    if($stat['name'] == 'losses') {
-                        $losses = $stat['value'];
-                    }
-                    if($stat['name'] == 'divisionWins') {
-                        $conference_wins = $stat['value'];
-                    }
-                    if($stat['name'] == 'divisionLosses') {
-                        $conference_losses = $stat['value'];
-                    }
-                }
-            }
+            $records = self::records($team->id);
 
             $team->conference_id = $conference;
             $team->division_id = $division;
@@ -71,19 +56,86 @@ class TeamController extends Controller
             $team->alt_color = $data['alternateColor'] ?? null;
             $team->logo = $logo;
             $team->stats = $stats;
-            $team->wins = $wins;
-            $team->losses = $losses;
-            $team->conference_wins = $conference_wins;
-            $team->conference_losses = $conference_losses;
+            $team->wins = $records['total_wins'];
+            $team->losses = $records['total_losses'];
+            $team->conference_wins = $records['conf_wins'];
+            $team->conference_losses = $records['conf_losses'];
             $team->conference_standing = $conference_standing;
 
             $team->save();
 
         } catch (Exception $e) {
-            Log::info($e->getMessage());
+            Log::info($e->getMessage() . ' (' . $e->getFile() . ') [' .  $e->getLine() . ']');
         }
 
         return $team;
+
+    }
+
+    public static function records($teamId) 
+    {
+
+        $records = [
+            'total_wins' => 0,
+            'total_losses' => 0,
+            'conf_wins' => 0,
+            'conf_losses' => 0
+        ];
+
+        $game = Game::where('home_team', intval($teamId))->orWhere('away_team', intval($teamId))->latest()->first();
+
+        
+        if($game) {
+            $gameId = $game->id;
+        } else {
+            return $records;
+        }
+
+        
+        $request = config('espn.game') . $gameId;
+        $data = Http::get($request)->json();
+        
+        $standings = $data['standings'] ?? [];
+        
+        foreach($standings['groups'] as $conference) {
+            if(isset($conference['divisions'])) {
+                foreach($conference['divisions'] as $division) {
+                    foreach($division['standings']['entries'] as $team) {
+                        if(intval($team['id']) == intval($teamId)) {
+                            foreach ($team['stats'] as $record) {
+                                if(strtolower($record['abbreviation']) == 'overall') {
+                                    $totals = explode('-', $record['summary']);
+                                    $records['total_wins'] = (int) $totals[0];
+                                    $records['total_losses'] = (int) $totals[1];
+                                } elseif (strtolower($record['abbreviation']) == 'conf') {
+                                    $confs = explode('-', $record['summary']);
+                                    $records['conf_wins'] = (int) $confs[0];
+                                    $records['conf_losses'] = (int) $confs[1];
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                foreach($conference['standings']['entries'] as $team) {
+                    if(intval($team['id']) == intval($teamId)) {
+                        foreach ($team['stats'] as $record) {
+                            if(strtolower($record['abbreviation']) == 'overall') {
+                                $totals = explode('-', $record['summary']);
+                                $records['total_wins'] = (int) $totals[0];
+                                $records['total_losses'] = (int) $totals[1];
+                            } elseif (strtolower($record['abbreviation']) == 'conf') {
+                                $confs = explode('-', $record['summary']);
+                                $records['conf_wins'] = (int) $confs[0];
+                                $records['conf_losses'] = (int) $confs[1];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $records;
 
     }
 }
