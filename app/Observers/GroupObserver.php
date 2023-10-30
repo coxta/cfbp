@@ -15,7 +15,7 @@ class GroupObserver
     {
         Member::create([
             'group_id' => $group->id,
-            'type_id' => Member::recordTypeId('Commissioner'),
+            'type_id' => Member::getTypeId('Commissioner'),
             'user_id' => $group->user_id
         ]);
         Toaster::success('Group created!');

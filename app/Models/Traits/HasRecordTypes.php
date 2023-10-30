@@ -11,7 +11,29 @@ trait HasRecordTypes
         return class_basename(__CLASS__);
     }
 
-    public static function recordType($name)
+    public function type()
+    {
+        return $this->belongsTo(RecordType::class);
+    }
+
+    public static function types()
+    {
+        $model = self::model();
+        return RecordType::select([
+            'id',
+            'id as value',
+            'name',
+            'model',
+            'description',
+            'created_at',
+            'updated_at',
+            'deleted_at',
+            'archived'
+        ])
+        ->where('model', $model);
+    }
+
+    public static function getType($name)
     {
         $model = self::model();
         $key = $model . ':' . $name . ':RecordType';
@@ -20,7 +42,7 @@ trait HasRecordTypes
         });
     }
 
-    public static function recordTypeId($name)
+    public static function getTypeId($name)
     {
         $model = self::model();
         $key = $model . ':' . $name . ':RecordTypeId';
