@@ -42,7 +42,7 @@ class ShowTeam extends Component
 
     public function render()
     {
-        $this->team = TeamController::sync($this->id);
+        $this->team = TeamController::sync(intval($this->id));
         $this->games = $this->team->games()->get();
         $this->loadNews();
         $this->cleanStats();
