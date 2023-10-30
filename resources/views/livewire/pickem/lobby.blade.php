@@ -1,8 +1,7 @@
 <div x-data>
 
     <livewire:pickem.new-group />
-
-    {{-- <livewire:pickem.new-contest /> --}}
+    <livewire:pickem.new-contest />
 
     <div class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:items-center md:justify-between w-full mb-4">
 
@@ -11,10 +10,10 @@
         <div class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-4">
             @auth
                 <x-button @click="$dispatch('create-group')" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
-                {{-- <x-button @click="$dispatch('create-group')" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button> --}}
+                <x-button @click="$dispatch('create-contest')" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
             @else
                 <x-button link="{{ route('login', ['from' => 'lobby']) }}" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
-                {{-- <x-button link="{{ route('login', ['from' => 'lobby']) }}" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button> --}}
+                <x-button link="{{ route('login', ['from' => 'lobby']) }}" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
             @endif
         </div>
 

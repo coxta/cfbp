@@ -4,6 +4,7 @@ use App\Livewire\Rankings;
 use App\Livewire\ShowGame;
 use App\Livewire\ShowTeam;
 use App\Livewire\Pickem\ShowGroup;
+use App\Livewire\Pickem\ShowContest;
 use App\Livewire\Scoreboard;
 use App\Livewire\Teams;
 
@@ -33,6 +34,8 @@ Route::middleware(['verified'])->group(function () {
     Route::get('/lobby', Lobby::class)->name('lobby');
 
     Route::get('/groups/{group}', ShowGroup::class)->name('group');
+
+    Route::get('/contests/{contest}', ShowContest::class)->name('contest');
 
     // Route::get('/schedule', Schedule::class)->name('schedule');
     // Route::get('/standings', Standings::class)->name('standings');
