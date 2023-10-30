@@ -13,8 +13,6 @@ class NewGroup extends Component
     public Group $group;
     public $typeOptions;
 
-    // 'group.name' => 'required|string|min:3|max:100|unique:groups,name',
-
     public function rules() {
         return [
             'group.name' => [
@@ -48,18 +46,9 @@ class NewGroup extends Component
 
     public function fresh()
     {
-        $this->group = new Group;
 
-        $this->typeOptions = RecordType::select([
-            'id as value',
-            'name as name',
-            'description as description'
-        ])
-        ->where('model','Group')
-        ->where('name', '!=', 'Master')
-        ->orderBy('name', 'desc')
-        ->get()
-        ->toArray();
+        $this->group = new Group;
+        $this->typeOptions = Group::types()->where('name','<>','Master')->orderBy('name','desc')->get()->toArray();
 
         foreach ($this->typeOptions as $type) {
             if($type['name'] == 'Public') {
@@ -68,6 +57,7 @@ class NewGroup extends Component
         }
 
         $this->group->user_id = auth()->id();
+
     }
 
     public function cancel()
