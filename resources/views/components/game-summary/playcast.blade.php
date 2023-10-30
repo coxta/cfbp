@@ -193,7 +193,7 @@
                                 <img src="{{ $drive['team']['logos'][0]['href'] }}" class="w-6 h-6"/>
                                 <div class="flex flex-col text-xs">
                                     <div class="font-semibold text-gray-900 uppercase">
-                                        {{ $drive['displayResult'] }}
+                                        {{ $drive['displayResult'] ?? $drive['description'] }}
                                     </div>
                                     <div class="font-normal text-gray-700">
                                         {{ $drive['description'] }}
