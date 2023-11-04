@@ -52,7 +52,9 @@ Route::middleware(['admin','verified'])->group(function () {
     Route::get('/feeds/{feed}/run', [FeedController::class, 'run'])->name('feed-run');
 
     // PowerGrids for Models
-    Route::get('/users', UserTable::class)->name('users');
+    Route::group(['background' => 'bg-white'], function () {
+        Route::get('/users', UserTable::class)->name('users');
+    });
 
 });
 
