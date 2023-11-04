@@ -114,6 +114,12 @@
                                     {{ __('Feeds') }}
                                 </x-nav-link>
                             </li>
+                            <li>
+                                <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                                    <img src="{{ secure_asset('img/nav-icons/users.svg') }}" class="h-5 w-5"/>
+                                    {{ __('Users') }}
+                                </x-nav-link>
+                            </li>
                         </ul>
                     </li>
                 @endadmin
@@ -199,6 +205,12 @@
                             <x-nav-link :href="route('feeds')" :active="request()->routeIs('feeds')">
                                 <img src="{{ secure_asset('img/nav-icons/feeds.svg') }}" class="h-5 w-5"/>
                                 {{ __('Feeds') }}
+                            </x-nav-link>
+                        </li>
+                        <li>
+                            <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                                <img src="{{ secure_asset('img/nav-icons/users.svg') }}" class="h-5 w-5"/>
+                                {{ __('Users') }}
                             </x-nav-link>
                         </li>
                     </ul>
@@ -303,7 +315,7 @@
             </header>
         @endisset
 
-      <main class="p-4">
+      <main class="p-4 min-h-screen">
         {{ $slot }}
       </main>
     </div>

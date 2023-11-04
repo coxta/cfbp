@@ -1,13 +1,19 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 const colors = require("tailwindcss/colors");
-import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
+import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    presets: [
+        require("./vendor/power-components/livewire-powergrid/tailwind.config.js"), 
+    ],
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/masmerise/livewire-toaster/resources/views/*.blade.php',
+        './app/Http/Livewire/**/*Table.php',
+        './vendor/power-components/livewire-powergrid/resources/views/**/*.php',
+        './vendor/power-components/livewire-powergrid/src/Themes/Tailwind.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/**/*.json',
@@ -56,8 +62,13 @@ export default {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                "pg-primary": colors.slate, 
+            }
         },
     },
-
-    plugins: [forms, typography],
+    plugins: [
+        forms,
+        typography,
+    ]
 };

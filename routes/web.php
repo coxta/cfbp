@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeedController;
 use App\Livewire\ViewArticle;
 
+// PowerGrids
+use App\Livewire\UserTable;
+
 // Autenticated user must be verified
 Route::middleware(['verified'])->group(function () {
 
@@ -47,6 +50,10 @@ Route::middleware(['admin','verified'])->group(function () {
     Route::get('/feeds', Feeds::class)->name('feeds');
     Route::get('/feeds/{feed}', ShowFeed::class)->name('feed');
     Route::get('/feeds/{feed}/run', [FeedController::class, 'run'])->name('feed-run');
+
+    // PowerGrids for Models
+    Route::get('/users', UserTable::class)->name('users');
+
 });
 
 Route::view('profile', 'profile')
