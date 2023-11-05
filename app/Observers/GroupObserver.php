@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Models\Group;
 use App\Models\Member;
-use Masmerise\Toaster\Toaster;
 
 class GroupObserver
 {
@@ -18,7 +17,6 @@ class GroupObserver
             'type_id' => Member::getTypeId('Commissioner'),
             'user_id' => $group->user_id
         ]);
-        Toaster::success('Group created!');
     }
 
     /**
@@ -34,7 +32,7 @@ class GroupObserver
      */
     public function deleted(Group $group): void
     {
-        Toaster::info('Group deleted');
+        //
     }
 
     /**

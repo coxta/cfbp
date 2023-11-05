@@ -1,14 +1,20 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
-const colors = require("tailwindcss/colors");
 import typography from '@tailwindcss/typography';
-import forms from '@tailwindcss/forms';
+
+const colors = require("tailwindcss/colors");
 
 /** @type {import('tailwindcss').Config} */
 export default {
     presets: [
+        require("./vendor/wireui/wireui/tailwind.config.js"),
         require("./vendor/power-components/livewire-powergrid/tailwind.config.js"), 
     ],
     content: [
+        "./vendor/wireui/wireui/src/*.php",
+        "./vendor/wireui/wireui/ts/**/*.ts",
+        "./vendor/wireui/wireui/src/View/**/*.php",
+        "./vendor/wireui/wireui/src/WireUi/**/*.php",
+        "./vendor/wireui/wireui/src/resources/**/*.blade.php",
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/masmerise/livewire-toaster/resources/views/*.blade.php',
         './app/Http/Livewire/**/*Table.php',
@@ -39,36 +45,29 @@ export default {
             purple: colors.purple,
             cyan: colors.cyan,
             orange: colors.orange,
-            light: 'var(--light)',
-            'light-accent': 'var(--lightAccent)',
-            muted: 'var(--muted)',
-            'muted-accent': 'var(--mutedAccent)',
-            dark: 'var(--dark)',
-            'dark-accent': 'var(--darkAccent)',
-            primary: 'var(--primary)',
-            'primary-accent': 'var(--primaryAccent)',
-            secondary: 'var(--secondary)',
-            'secondary-accent': 'var(--secondaryAccent)',
-            success: 'var(--success)',
-            'success-accent': 'var(--successAccent)',
-            danger: 'var(--danger)',
-            'danger-accent': 'var(--dangerAccent)',
-            warning: 'var(--warning)',
-            'warning-accent': 'var(--warningAccent)',
-            info: 'var(--info)',
-            'info-accent': 'var(--infoAccent)',
         },
         extend: {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                "pg-primary": colors.slate, 
+                'pg-primary': colors.slate,
+                primary: colors.blue,
+                secondary: colors.gray,
+                positive: colors.emerald,
+                negative: colors.red,
+                warning: colors.amber,
+                info: colors.sky,
+                light: 'var(--light)',
+                muted: 'var(--muted)',
+                dark: 'var(--dark)',
             }
         },
     },
     plugins: [
-        forms,
+        require("@tailwindcss/forms")({
+            strategy: 'class',
+        }),
         typography,
     ]
 };

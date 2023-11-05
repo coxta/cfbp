@@ -1,12 +1,6 @@
 import './bootstrap';
 
 /**
- * Livewire Toaster
- * https://github.com/masmerise/livewire-toaster
- */
-import '../../vendor/masmerise/livewire-toaster/resources/js';
-
-/**
  * Livewire PowerGrid
  * https://livewire-powergrid.com
  */

@@ -9,8 +9,16 @@
             Teams
         </div>
         <div class="flex flex-row items-center space-x-4">
-            <x-input.select wire:model.live="division" :options="$divisions" />
-            <x-input.select wire:model.live="conference" :options="$conferences" />
+            <x-native-select 
+                    wire:model.live="division"
+                    :options="$divisions" 
+                    option-label="name" 
+                    option-value="value" />
+            <x-native-select 
+                    wire:model.live="conference"
+                    :options="$conferences" 
+                    option-label="name" 
+                    option-value="value" />
         </div>
     </div>
 

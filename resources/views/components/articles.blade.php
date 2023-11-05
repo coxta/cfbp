@@ -1,4 +1,5 @@
 <div class="mx-auto lg:grid lg:grid-cols-12 lg:gap-4">
+
   <div class="hidden lg:block lg:col-span-3">
 
       <!-- Previews -->
@@ -23,7 +24,6 @@
 
   <!-- Stories -->
   <div class="lg:col-span-6">
-
 
       {{-- <div class="text-lg font-bold text-gray-600 mb-1">Headlines</div> --}}
 

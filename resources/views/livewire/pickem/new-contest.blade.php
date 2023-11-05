@@ -35,18 +35,21 @@
                 </button>
             </div>
             
-            <div class="flex flex-col space-y-6 mt-2 w-full text-left">             
-                <x-input.choice 
-                    wire:model.live="contest.type_id"
-                    :current="$contest->type_id"
-                    columns="1"
-                    label="Contest Type"
-                    :options="$typeOptions" />
+            <div class="flex flex-col space-y-6 mt-6 w-full text-left">  
+                <label class="flex items-center mb-1 text-xs font-medium text-gray-500">
+                    Contest Type
+                    <x-loader action="contest.type_id" color="text-blue-700" class="w-2 h-2 ml-2" />
+                </label>      
+                @foreach ($typeOptions as $option)
+                    <x-radio 
+                        id="{{ $option['value'] }}" 
+                        right-label="{{ $option['name'] }}"
+                        wire:model.live="contest.type_id"
+                        value="{{ $option['value'] }}" />
+                @endforeach
             </div>
         <div class="mt-8 flex flex-row items-center justify-around">
-            <x-button action="create" color="blue">
-                Create {{ $contest->type->name }} Contest
-            </x-button>
+            <x-button primary wire:click="create" label="{{ 'Create ' . $contest->type->name . ' Contest'}}"/>
         </div>
         </div>
     </div>

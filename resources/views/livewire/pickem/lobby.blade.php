@@ -9,11 +9,11 @@
         
         <div class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-4">
             @auth
-                <x-button @click="$dispatch('create-group')" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
-                <x-button @click="$dispatch('create-contest')" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
+                <x-button primary @click="$dispatch('create-group')" icon="user-group" label="Create a Group" class="w-full md:w-auto"/>
+                <x-button positive @click="$dispatch('create-contest')" icon="trophy" label="Create a Contest" class="w-full md:w-auto"/>
             @else
-                <x-button link="{{ route('login', ['from' => 'lobby']) }}" color="blue" icon="user-group" block class="w-full md:w-auto">Create a Group</x-button>
-                <x-button link="{{ route('login', ['from' => 'lobby']) }}" color="green" icon="trophy" block class="w-full md:w-auto">Create a Contest</x-button>
+                <x-button primary href="{{ route('login', ['from' => 'lobby']) }}" icon="user-group" label="Create a Group" class="w-full md:w-auto"/>
+                <x-button positive href="{{ route('login', ['from' => 'lobby']) }}" icon="trophy" label="Create a Contest" class="w-full md:w-auto"/>
             @endif
         </div>
 

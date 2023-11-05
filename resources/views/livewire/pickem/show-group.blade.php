@@ -1,4 +1,4 @@
-<div x-data>
+<div x-data wire:init="notifications">
 
     <livewire:pickem.new-group />
 
@@ -10,9 +10,7 @@
         
         <div class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-4">
             @if($group->type->name == 'Public' && auth()->id() == $group->user_id)
-                <x-button action="delete" wire:confirm.prompt="Are you sure you want to delete this group?\n\nType DELETE to confirm|DELETE" color="red" icon="trash" block class="w-full md:w-auto">
-                    Delete
-                </x-button>
+                <x-button negative wire:click="delete" wire:confirm.prompt="Are you sure you want to delete this group?\n\nType DELETE to confirm|DELETE" icon="trash" label="Delete" class="w-full md:w-auto"/>
             @endif
         </div>
 

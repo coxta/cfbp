@@ -5,8 +5,6 @@ namespace App\Livewire\Pickem;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 use App\Models\Group;
-use App\Models\RecordType;
-
 class NewGroup extends Component
 {
 

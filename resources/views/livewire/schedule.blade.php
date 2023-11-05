@@ -10,10 +10,18 @@
 
         <div class="flex flex-row items-center space-x-4">
             <div class="flex">
-                <x-input.select wire:model.live="week" :options="$weeks" />
+                <x-native-select 
+                    wire:model.live="week"
+                    :options="$weeks" 
+                    option-label="name" 
+                    option-value="value" />
             </div>
             <div class="flex">
-                <x-input.select wire:model.live="conference" :options="$conferences" />
+                <x-native-select 
+                    wire:model.live="conference"
+                    :options="$conferences" 
+                    option-label="name" 
+                    option-value="value" />
             </div>
         </div>
 
