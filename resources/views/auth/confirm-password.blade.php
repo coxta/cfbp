@@ -21,7 +21,16 @@
 
             <!-- Password -->
             <div>
-                <x-password id="password" name="password" class="block mt-1 w-full" label="Password" required autocomplete="current-password"/>
+                <x-input 
+                    id="password" 
+                    class="block mt-1 w-full"
+                    type="password"
+                    name="password"
+                    label="Password"
+                    placeholder="Password"
+                    required 
+                    autocomplete="current-password" />
+                {{-- <x-password id="password" name="password" class="block mt-1 w-full" label="Password" required autocomplete="current-password"/> --}}
             </div>
 
             <div class="flex justify-end mt-4">

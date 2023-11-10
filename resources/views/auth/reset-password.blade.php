@@ -25,17 +25,33 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-password id="password" class="block mt-1 w-full"
+                <x-input 
+                    id="password" 
+                    class="block mt-1 w-full"
+                    type="password"
+                    name="password"
+                    label="Password"
+                    placeholder="Password"
+                    required />
+                {{-- <x-password id="password" class="block mt-1 w-full"
                                 type="password" label="Password"
-                                name="password" required />
+                                name="password" required /> --}}
             </div>
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-password id="password_confirmation" class="block mt-1 w-full"
+                <x-input 
+                    id="password_confirmation" 
+                    class="block mt-1 w-full"
+                    type="password"
+                    name="password_confirmation"
+                    label="Confirm Password"
+                    placeholder="Confirm Password"
+                    required />
+                {{-- <x-password id="password_confirmation" class="block mt-1 w-full"
                                     type="password"
                                     label="Confirm Password"
-                                    name="password_confirmation" required />
+                                    name="password_confirmation" required /> --}}
             </div>
 
             <div class="flex items-center justify-end mt-4">

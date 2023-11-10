@@ -28,7 +28,8 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-password id="password" name="password" placeholder="Your password" class="block mt-1 w-full" label="Password" required autocomplete="current-password"/>
+                <x-input label="Password" id="password" type="password" name="password" placeholder="Your password" class="block mt-1 w-full" required/>
+                {{-- <x-password id="password" name="password" type="password" placeholder="Your password" class="block mt-1 w-full" label="Password" required autocomplete="current-password"/> --}}
             </div>
 
             <!-- Remember Me -->
