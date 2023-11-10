@@ -41,14 +41,21 @@
             </button>
           </div>
   
-          <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
+          <div class="flex grow flex-col overflow-y-auto bg-white px-6 pb-4">
 
-            <a href="{{ route('home') }}" class="flex h-16 shrink-0 items-center space-x-2">
+            <a href="{{ route('home') }}" class="flex h-16 shrink-0 items-center space-x-2 mt-16">
                 <div class="h-6 w-6 md:h-8 md:w-8">
                     <img src="{{ asset('img/logo.png') }}" alt="CFBP" />
                 </div>
                 <div class="flex text-lg md:text-2xl font-light text-indigo-600">CFBP</div>
             </a>
+
+          @guest
+            <div class="flex items-center sm:hidden space-x-2 mt-2 mb-4">
+                <x-button sm primary href="{{ route('login') }}" label="Log In" />
+                <x-button sm primary outline href="{{ route('register') }}" label="Create Account" />
+            </div>
+          @endguest
 
             <nav class="flex flex-1 flex-col">
               <ul role="list" class="flex flex-1 flex-col gap-y-7">
