@@ -4,9 +4,13 @@ namespace App\Livewire\Pickem;
 
 use Livewire\Component;
 use App\Models\Group;
+use WireUi\Traits\WireUiActions;
 
 class ShowGroup extends Component
 {
+
+    use WireUiActions;
+
     public $group;
     public $new;
 
@@ -21,8 +25,17 @@ class ShowGroup extends Component
         return view('livewire.pickem.show-group');
     }
 
-    public function delete()
+    public function notifications()
     {
+        $this->notification()->send([
+            'icon' => 'success',
+            'title' => 'Group created!',
+            'description' => 'Create the group ' . $this->group->name,
+        ]);
+    }
+
+    public function delete()
+    {      
         $this->group->delete();
         return redirect()->route('lobby');
     }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 // Utilities
-use App\View\Components\Utilities\Button;
+use App\View\Components\Utilities\Choice;
 use App\View\Components\Utilities\Loader;
 use App\View\Components\Utilities\Container;
 use App\View\Components\Utilities\UnderConstruction;
@@ -37,7 +37,7 @@ class ComponentServiceProvider extends ServiceProvider
          */
 
         // Utilities
-        Blade::component('button', Button::class);
+        Blade::component('choice', Choice::class);
         Blade::component('loader', Loader::class);
         Blade::component('container', Container::class);
         Blade::component('under-construction', UnderConstruction::class);

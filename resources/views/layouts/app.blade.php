@@ -21,6 +21,7 @@
     <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
 
     <!-- Scripts -->
+    <wireui:scripts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
@@ -30,16 +31,16 @@
 </head>
 
 <body class="h-full">
-
+    
     <div class="min-h-screen">
 
         @include('layouts.shell')
 
     </div>
 
-    @livewireScripts
+    <x-notifications z-index="z-50" />
 
-    <x-toaster-hub />
+    @livewireScripts
     
 </body>
 

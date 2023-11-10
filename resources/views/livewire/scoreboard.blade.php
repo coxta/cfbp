@@ -13,14 +13,22 @@
         <div class="flex flex-row flex-grow sm:flex-grow-0 items-end space-x-4">
             @unless($this->week == $this->current && $this->conference == 'top')
                 <div class="flex flex-grow sm:flex-grow-0">
-                    <x-button action="defaults" icon="arrow-path" color="blue" flat>Reset</x-button>
+                    <x-button primary sm flat wire:click="defaults" icon="arrow-path" label="Reset" />
                 </div>
             @endunless
             <div class="flex flex-grow sm:flex-grow-0">
-                <x-input.select wire:model.live="week" :options="$weeks" />
+                <x-native-select 
+                    wire:model.live="week"
+                    :options="$weeks" 
+                    option-label="name" 
+                    option-value="value" />
             </div>
             <div class="flex flex-grow sm:flex-grow-0">
-                <x-input.select wire:model.live="conference" :options="$conferences" />
+                <x-native-select 
+                    wire:model.live="conference"
+                    :options="$conferences" 
+                    option-label="name" 
+                    option-value="value" />
             </div>
         </div>
 

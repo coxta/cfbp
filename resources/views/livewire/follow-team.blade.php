@@ -1,8 +1,7 @@
-<x-button
-    action="toggle"
-    color="{{ $following ? 'gray' : 'blue' }}"
-    icon="{{ $following ? '' : 'plus' }}"
-    block
->
-    {{ $following ? 'Unfollow' : 'Follow' }}
-</x-button>
+<span>
+    @if($following)
+        <x-button wire:click="toggle" spinner="toggle" label="Unfollow" secondary outline/>
+    @else
+        <x-button wire:click="toggle" spinner="toggle" label="Follow" icon="plus" primary/>
+    @endif
+</span>

@@ -26,7 +26,7 @@
             <div class="mt-4 flex items-center justify-between">
                 @csrf
                 <p class="text-xs text-gray-500">Didn't get an email?</p>
-                <x-button type="submit">Resend Verification Email</x-button>
+                <x-button primary type="submit" label="Resend Verification Email" />
             </div>
         </form>
 

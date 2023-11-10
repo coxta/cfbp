@@ -18,9 +18,9 @@ use Carbon\Carbon;
         </div>
         <div
             class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
-            <x-button action="$toggle('editing')" color="blue" outline>{{ $editing ? 'Cancel' : 'Edit' }}</x-button>
+            <x-button primary outline wire:click="$toggle('editing')" label="{{ $editing ? 'Cancel' : 'Edit' }}" />
             @unless($editing)
-                <x-button action="run" color="blue">Run</x-button>
+                <x-button primary wire:click="run" label="Run" />
             @endunless
         </div>
     </div>
@@ -30,15 +30,14 @@ use Carbon\Carbon;
         <div class="text-xl font-semibold tracking-wide">Edit Feed</div>
         <div class="mt-4">
 
-            <x-input.text wire:model.blur="feed.name" label="Name" placeholder="Scoreboard" />
-            <x-input.text wire:model.blur="feed.description" label="Description"
-                placeholder="Polls the ESPN Scoreboard API for updates" />
-            <x-input.text wire:model.blur="feed.job" label="Job" placeholder="App\Jobs\Feeds\Scoreboard" />
-            <x-input.text wire:model.blur="feed.frequency" label="Frequency" placeholder="Every 5 Minutes" />
+            <x-input wire:model.blur="feed.name" label="Name" placeholder="Scoreboard" />
+            <x-input wire:model.blur="feed.description" label="Description" placeholder="Polls the ESPN Scoreboard API for updates" />
+            <x-input wire:model.blur="feed.job" label="Job" placeholder="App\Jobs\Feeds\Scoreboard" />
+            <x-input wire:model.blur="feed.frequency" label="Frequency" placeholder="Every 5 Minutes" />
 
             <div class="flex justify-center space-x-4 my-4">
-                <x-button action="$toggle('editing')" color="red" outline>Cancel</x-button>
-                <x-button action="save" color="blue" icon="circle-stack">Save</x-button>
+                <x-button negative outline wire:click="$toggle('editing')" label="Cancel" />
+                <x-button primary wire:click="save" icon="circle-stack" label="Save" />
             </div>
 
         </div>

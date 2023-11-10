@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Utilities;
+namespace App\View\Components\Drop;
 
 use Illuminate\View\Component;
 
@@ -171,6 +171,6 @@ class Button extends Component
      */
     public function render()
     {
-        return view('components.utilities.button');
+        return view('components.drop.button');
     }
 }

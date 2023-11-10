@@ -24,18 +24,14 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input label="Email" id="email" type="email" name="email" :value="old('email')" placeholder="Your email" required autofocus/>
             </div>
 
             <div class="flex items-center justify-between mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     Back to login
                 </a>
-                <x-button type="submit" color="blue">
-                    Reset Password
-                </x-button>
+                <x-button type="submit" label="Reset Password" primary/>
             </div>
         </form>
     </x-auth-card>

@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\User;
-use Masmerise\Toaster\Toaster;
 
 class UserObserver
 {
@@ -13,14 +12,10 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        
         if(!isset($user->teams)) {
             $user->teams = [];
             $user->save();
         }
-        
-        Toaster::success('Account created!');
-
     }
 
     /**

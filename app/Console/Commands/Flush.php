@@ -43,5 +43,6 @@ class Flush extends Command
         $this->call('route:clear');
         $this->call('event:clear');
         $this->call('cache:clear');
+        $this->call('optimize:clear');
     }
 }

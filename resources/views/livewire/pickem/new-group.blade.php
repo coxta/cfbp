@@ -36,18 +36,22 @@
             </div>
             
             <div class="flex flex-col space-y-6 mt-2 w-full text-left">
-                <x-input.text wire:model.blur="group.name" label="Group Name" placeholder="Enter group name"/>                
-                <x-input.choice 
-                    wire:model.live="group.type_id"
-                    :current="$group->type_id"
-                    columns="2"
-                    label="Group Type"
-                    :options="$typeOptions" />
+                <x-input wire:model.blur="group.name" label="Group Name" placeholder="Enter group name"/>
+                
+                <label class="flex items-center mb-1 text-xs font-medium text-gray-500">
+                    Group Type
+                    <x-loader action="group.type_id" color="text-blue-700" class="w-2 h-2 ml-2" />
+                </label>
+                @foreach ($typeOptions as $option)
+                    <x-radio 
+                        id="{{ $option['value'] }}" 
+                        right-label="{{ $option['name'] }}"
+                        wire:model.live="group.type_id"
+                        value="{{ $option['value'] }}" />
+                @endforeach
             </div>
         <div class="mt-8 flex flex-row items-center justify-around">
-            <x-button action="create" color="blue">
-                Create {{ $group->type->name }} Group
-            </x-button>
+            <x-button primary wire:click="create" label="{{ 'Create ' . $group->type->name . ' Group'}}"/>
         </div>
         </div>
     </div>

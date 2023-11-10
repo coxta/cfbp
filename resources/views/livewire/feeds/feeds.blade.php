@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between">
             <div class="flex text-xl font-semibold text-gray-500">Current Feeds</div>
             <div class="flex">
-                <x-button action="$toggle('upserting')" color="blue">New</x-button>
+                <x-button primary wire:click="$toggle('upserting')" label="New" />
             </div>
         </div>
 
@@ -48,15 +48,14 @@
         <div class="text-xl font-semibold tracking-wide">New Feed</div>
         <div class="mt-4">
 
-            <x-input.text wire:model.blur="feed.name" label="Name" placeholder="Scoreboard" />
-            <x-input.text wire:model.blur="feed.description" label="Description"
-                placeholder="Polls the ESPN Scoreboard API for updates" />
-            <x-input.text wire:model.blur="feed.job" label="Job" placeholder="App\Jobs\Feeds\Scoreboard" />
-            <x-input.text wire:model.blur="feed.frequency" label="Frequency" placeholder="Every 5 Minutes" />
+            <x-input wire:model.blur="feed.name" label="Name" placeholder="Scoreboard"/>          
+            <x-input wire:model.blur="feed.description" label="Description" placeholder="Polls the ESPN Scoreboard API for updates" />
+            <x-input wire:model.blur="feed.job" label="Job" placeholder="App\Jobs\Feeds\Scoreboard" />
+            <x-input wire:model.blur="feed.frequency" label="Frequency" placeholder="Every 5 Minutes" />
 
             <div class="flex justify-center space-x-4 my-4">
-                <x-button action="$toggle('upserting')" color="red" outline>Cancel</x-button>
-                <x-button action="save" color="blue" icon="circle-stack">Save</x-button>
+                <x-button negative outline wire:click="$toggle('upserting')" label="Cancel" />
+                <x-button primary wire:click="save" icon="circle-stack" label="Save" />
             </div>
 
         </div>
