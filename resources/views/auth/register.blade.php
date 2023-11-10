@@ -40,14 +40,22 @@
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-password 
+                <x-input 
+                    id="password_confirmation" 
+                    class="block mt-1 w-full"
+                    type="password"
+                    name="password_confirmation"
+                    label="Password"
+                    placeholder="Confirm Password"
+                    required />
+                {{-- <x-password 
                     id="password_confirmation" 
                     class="block mt-1 w-full"
                     type="password" 
                     label="Confirm Password"
                     placeholder="Confirm Password"
                     name="password_confirmation" 
-                    required />
+                    required /> --}}
             </div>
 
             <div class="flex items-center justify-between mt-4">
