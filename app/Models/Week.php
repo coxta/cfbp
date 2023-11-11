@@ -12,5 +12,9 @@ class Week extends Model
     use HasUuids, WeekTrait;
 
     protected $guarded = [];
+
+    protected $with = [
+        'calendar'
+    ];
     
 }

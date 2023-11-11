@@ -17,6 +17,8 @@ return new class extends Migration
             $table->uuid('group_id');
             $table->uuid('week_id');
             $table->uuid('type_id');
+            $table->string('name', 100);
+            $table->string('status', 20)->default('Created');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('archived')->storedAs('IF(deleted_at IS NULL, 0, 1)')->nullable();

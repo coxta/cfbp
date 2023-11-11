@@ -27,11 +27,13 @@ class ShowGroup extends Component
 
     public function notifications()
     {
-        $this->notification()->send([
-            'icon' => 'success',
-            'title' => 'Group created!',
-            'description' => 'Create the group ' . $this->group->name,
-        ]);
+        if($this->new) {
+            $this->notification()->send([
+                'icon' => 'success',
+                'title' => 'Group created!',
+                'description' => 'Create the group ' . $this->group->name,
+            ]);
+        }
     }
 
     public function delete()

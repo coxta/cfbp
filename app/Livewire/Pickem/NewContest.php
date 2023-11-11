@@ -11,6 +11,8 @@ class NewContest extends Component
 {
 
     public Contest $contest;
+    public Group $group;
+    public Week $week;
     public $typeOptions;
 
     public function rules() {
@@ -21,8 +23,10 @@ class NewContest extends Component
         ];
     }
 
-    public function mount()
+    public function mount(Group $group = null)
     {
+        $this->group = $group ?? Group::where('name','Master')->oldest()->first()->id;
+        $this->week = Week::current();
         $this->fresh();
     }
     public function render()
@@ -36,7 +40,15 @@ class NewContest extends Component
 
     public function create()
     {
+
         $this->validate();
+
+        // Set the contest name
+        $this->contest->name = strval($this->week->calendar->year);
+        $this->contest->name .= ' ' . $this->week->calendar->name;
+        $this->contest->name .= ' - ' . $this->week->name;
+        $this->contest->name .= ' - ' . Contest::types()->where('id', $this->contest->type_id)->first()->name;
+
         $this->contest->save();
         session()->flash('new-contest', true);
         return redirect()->route('contest', $this->contest->id);
@@ -54,11 +66,14 @@ class NewContest extends Component
             }
         }
 
-        // Set the master group
-        $this->contest->group_id = Group::where('name','Master')->oldest()->first()->id;
+        // Set the group
+        $this->contest->group_id = $this->group->id;
 
         // Set the week
-        $this->contest->week_id = Week::current()->id;
+        $this->contest->week_id = $this->week->id;
+
+        // Set the status
+        $this->contest->status = 'Created';
 
     }
 }
