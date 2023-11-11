@@ -6,6 +6,27 @@
 
     <h3 class="font-semibold leading-6 text-gray-700 mt-3">{{ $contest->name }}</h3>
 
+    <x-modal name="contest-selections" blur="sm">
+        <x-card title="Contest Selections" class="w-full max-w-2xl">
+            <h3 class="mb-2">Current Selections</h3>
+            <div class="flex flex-col space-y-1">
+
+                @foreach($contest->selections as $selection)
+
+                    <div class="flex flex-row items-center justify-between">
+                        <div>{{ $selection->game->short_name }}</div>
+                        <div class="flex flex-row items-center space-x-4 justify-end">
+                            <div>{{ $selection->favorite->abbreviation }} -{{ $selection->spread }}</div>
+                            <x-button wire:click="dropSelection('{{ $selection->game->id }}')" outline xs negative label="Remove" />
+                        </div>
+                    </div>
+
+                @endforeach
+
+            </div>
+        </x-card>
+    </x-modal>
+
     @if($contest->status == 'Submitted')
 
         <h3 class="text-sm text-gray-700 my-2">Entries</h3>
@@ -19,27 +40,6 @@
         </div>
 
     @elseif($contest->status == 'Created')
-        
-        <x-modal name="contest-selections" blur="sm">
-            <x-card title="Contest Selections" class="w-full max-w-2xl">
-                <h3 class="mb-2">Current Selections</h3>
-                <div class="flex flex-col space-y-1">
-
-                    @foreach($contest->selections as $selection)
-
-                        <div class="flex flex-row items-center justify-between">
-                            <div>{{ $selection->game->short_name }}</div>
-                            <div class="flex flex-row items-center space-x-4 justify-end">
-                                <div>{{ $selection->favorite->abbreviation }} -{{ $selection->spread }}</div>
-                                <x-button wire:click="dropSelection('{{ $selection->game->id }}')" outline xs negative label="Remove" />
-                            </div>
-                        </div>
-
-                    @endforeach
-
-                </div>
-            </x-card>
-        </x-modal>
 
         <div class="flex w-full sm:items-end sm:justify-between">
     
