@@ -6,9 +6,17 @@
 
     <h3 class="font-semibold leading-6 text-gray-700 mt-3">{{ $contest->name }}</h3>
 
-    @if(count($contest->selections) == 12)
+    @if($contest->status == 'Submitted')
 
-        <x-button wire:click="submit" positive label="Submit Selections" />
+        <h3 class="text-sm text-gray-700 my-2">Entries</h3>
+        <p>Working on it...</p>
+
+    @elseif(count($contest->selections) == 12 && $contest->status == 'Created')
+
+        <div class="flex flex-row items-center justify-around">
+            <x-button label="View Selections" x-on:click="$openModal('contest-selections')" sm primary />
+            <x-button wire:click="submit" positive label="Submit Selections" />
+        </div>
 
     @elseif($contest->status == 'Created')
         
