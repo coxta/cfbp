@@ -34,7 +34,7 @@
 
     @elseif(count($contest->selections) == 12 && $contest->status == 'Created')
 
-        <div class="flex flex-row items-center justify-around">
+        <div class="flex flex-col space-y-2">
             <x-button label="View Selections" x-on:click="$openModal('contest-selections')" sm primary />
             <x-button wire:click="submit" positive label="Submit Selections" />
         </div>
