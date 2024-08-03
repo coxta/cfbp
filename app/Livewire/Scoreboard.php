@@ -12,10 +12,10 @@ use App\Models\Conference;
 class Scoreboard extends Component
 {
 
-    #[Url(as: 'period', keep:true, history: true)]
+    #[Url(as: 'period', keep: true, history: true)]
     public $week;
 
-    #[Url(as: 'scope', keep: true, history: true)] 
+    #[Url(as: 'scope', keep: true, history: true)]
     public $conference = 'top';
 
     public $current;
@@ -33,8 +33,6 @@ class Scoreboard extends Component
 
         $data = Week::with('calendar', 'games', 'myGames')->find($this->week);
 
-        // ddd($data->myGames);
-
         $period = [
             'name' => $data->name,
             'dates' => Carbon::parse($data->start_date)->format('M j') . ' - ' . Carbon::parse($data->end_date)->format('M j')
@@ -46,17 +44,15 @@ class Scoreboard extends Component
         foreach ($data->myGames as $myGame) {
 
             if ($this->conference == 'top' && ($myGame->home_rank <= 25 || $myGame->away_rank <= 25)) {
-                
-                array_push($myGames, $myGame);
 
+                array_push($myGames, $myGame);
             } else if (
                 $this->conference == 'all'
-                || ( $myGame->awayConference && $myGame->awayConference->id == $this->conference )
-                || ( $myGame->homeConference && $myGame->homeConference->id == $this->conference )
-                ) {
+                || ($myGame->awayConference && $myGame->awayConference->id == $this->conference)
+                || ($myGame->homeConference && $myGame->homeConference->id == $this->conference)
+            ) {
 
                 array_push($myGames, $myGame);
-                
             }
         }
 
@@ -76,9 +72,9 @@ class Scoreboard extends Component
                 }
             } else if (
                 $this->conference == 'all'
-                || ( $game->awayConference && $game->awayConference->id == $this->conference )
-                || ( $game->homeConference && $game->homeConference->id == $this->conference )
-                ) {
+                || ($game->awayConference && $game->awayConference->id == $this->conference)
+                || ($game->homeConference && $game->homeConference->id == $this->conference)
+            ) {
 
                 if (isset($dates[$key])) {
                     array_push($dates[$key]['games'], $game);
@@ -96,7 +92,6 @@ class Scoreboard extends Component
             'myGames' => $myGames,
             'dates' => $dates
         ]);
-
     }
 
     public function defaults()
@@ -108,9 +103,14 @@ class Scoreboard extends Component
     public function setFilters()
     {
 
-        $this->current = Week::whereDate('start_date', '<=', now())->whereDate('end_date', '>=', now())->first()->id;
-        if(!isset($this->week)) {
+        $currentWeek = Week::whereDate('start_date', '<=', now())->whereDate('end_date', '>=', now())->first();
+        $this->current = $currentWeek->id;
+        if (!isset($this->week)) {
             $this->week = $this->current;
+        }
+
+        if ($currentWeek->name == 'Week 1') {
+            $this->conference = 'all';
         }
 
         // Load weeks for the current season
@@ -120,8 +120,6 @@ class Scoreboard extends Component
         })
             ->orderBy('start_date')
             ->get();
-
-        // ddd($weeks);
 
         foreach ($weeks as $week) {
             array_push($this->weeks, [
