@@ -5,7 +5,7 @@ return [
     /**
      * Current Season
      */
-    'season' => 2023,
+    'season' => 2024,
 
     /**
      * API Endpoints
