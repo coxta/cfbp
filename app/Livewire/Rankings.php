@@ -124,7 +124,10 @@ class Rankings extends Component
             }
         }
 
+        $this->weeks = array_reverse($this->weeks);
+
         $this->defaultPoll = RankingsController::defaultPoll();
+
         if (!isset($this->poll)) {
             $this->poll = $this->defaultPoll;
         }
@@ -144,6 +147,11 @@ class Rankings extends Component
         array_push($this->polls, [
             'name' => 'Coaches',
             'value' => 'coaches'
+        ]);
+
+        array_push($this->polls, [
+            'name' => 'FCS Coaches',
+            'value' => 'fcs'
         ]);
     }
 }

@@ -8,7 +8,7 @@
 
         <div class="hidden sm:flex items-baseline space-x-4">
             <div class="flex text-2xl font-semibold tracking-wider text-gray-600">
-                {{ $ranks[0]->headline }}
+                {{ $ranks[0]->headline ?? ($poll == 'cfp' ? 'CFP' : ($poll == 'ap' ? 'AP' : 'Coaches') . ' - ' . $period['name']) }}
                 {{-- {{ $poll == 'cfp' ? 'CFP' : ($poll == 'ap' ? 'AP' : 'Coaches') . ' - ' . $period['name'] }} --}}
             </div>
             <div class="flex text-gray-500">{{ $period['dates'] }}</div>
