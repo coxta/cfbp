@@ -12,14 +12,18 @@ use Livewire\Attributes\Url;
 class Rankings extends Component
 {
 
-    #[Url(as: 'period', keep:true, history: true)]
+    #[Url(keep: true, history: true)]
+    public $season;
+
+    #[Url(as: 'period', keep: true, history: true)]
     public $week;
 
-    #[Url(keep: true, history: true)] 
+    #[Url(keep: true, history: true)]
     public $poll;
 
     public $current;
     public $defaultPoll;
+    public $seasons = [];
     public $weeks = [];
     public $polls = [];
 
@@ -31,7 +35,7 @@ class Rankings extends Component
     public function render()
     {
 
-        $data = Week::find($this->week);
+        $data = Week::with('rankings')->find($this->week);
 
         $period = [
             'name' => $data->name,
@@ -63,35 +67,69 @@ class Rankings extends Component
         $this->poll = $this->defaultPoll;
     }
 
-    public function setFilters()
+    public function updatingSeason($season)
     {
+        $this->weeks = [];
 
-        $this->current = Week::whereDate('start_date', '<=', now())->whereDate('end_date', '>=', now())->first()->id;
-        if(!isset($this->week)) {
-            $this->week = $this->current;
-        }
-
-        $this->defaultPoll = RankingsController::defaultPoll();
-        if(!isset($this->poll)) {
-            $this->poll = $this->defaultPoll;
-        }
-
-        // Load weeks for the current season
-        $weeks = Week::whereHas('calendar', function ($calendar) {
-            $calendar->where('year', config('espn.season'));
+        $weeks = Week::has('rankings')->whereHas('calendar', function ($calendar) use ($season) {
+            $calendar->where('year', $season);
         })
-            ->where('name', 'like', 'Week%')
             ->orderBy('start_date')
             ->get();
 
         foreach ($weeks as $week) {
             array_push($this->weeks, [
-                'name' => $week->name,
+                'name' => ($week->name == 'Bowls' ? 'Final' : ($week->name == 'Week 1' ? 'Preseason' : $week->name)),
                 'value' => $week->id
             ]);
         }
 
-        if($this->defaultPoll == 'cfp') {
+        $this->week = $weeks[0]->id;
+    }
+
+    public function setFilters()
+    {
+
+        $available = Week::has('rankings')
+            ->latest('start_date')->get();
+
+        $this->current = $available[0]->id;
+
+        if (!isset($this->week)) {
+            $this->week = $this->current;
+        }
+
+        if (!isset($this->season)) {
+            $this->season = $available[0]->calendar->year;
+        }
+
+        $addedSeasons = [];
+        $latestSeason = $available[0]->calendar->year;
+
+        foreach ($available as $week) {
+
+            if ($week->calendar->year == $latestSeason) {
+                array_push($this->weeks, [
+                    'name' => ($week->name == 'Bowls' ? 'Final' : ($week->name == 'Week 1' ? 'Preseason' : $week->name)),
+                    'value' => $week->id
+                ]);
+            }
+
+            if (!in_array($week->calendar->year, $addedSeasons)) {
+                array_push($this->seasons, [
+                    'name' => $week->calendar->year,
+                    'value' => $week->calendar->year
+                ]);
+                array_push($addedSeasons, $week->calendar->year);
+            }
+        }
+
+        $this->defaultPoll = RankingsController::defaultPoll();
+        if (!isset($this->poll)) {
+            $this->poll = $this->defaultPoll;
+        }
+
+        if ($this->defaultPoll == 'cfp') {
             array_push($this->polls, [
                 'name' => 'CFP',
                 'value' => 'cfp'

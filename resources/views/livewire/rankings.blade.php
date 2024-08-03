@@ -8,30 +8,26 @@
 
         <div class="hidden sm:flex items-baseline space-x-4">
             <div class="flex text-2xl font-semibold tracking-wider text-gray-600">
-                {{ $poll == 'cfp' ? 'CFP' : ($poll == 'ap' ? 'AP' : 'Coaches') . ' - ' . $period['name'] }}
+                {{ $ranks[0]->headline }}
+                {{-- {{ $poll == 'cfp' ? 'CFP' : ($poll == 'ap' ? 'AP' : 'Coaches') . ' - ' . $period['name'] }} --}}
             </div>
             <div class="flex text-gray-500">{{ $period['dates'] }}</div>
         </div>
 
         <div class="flex flex-row flex-grow sm:flex-grow-0 items-end space-x-4">
-            @unless($this->week == $this->current && $this->poll == $this->defaultPoll)
+            @unless ($this->week == $this->current && $this->poll == $this->defaultPoll)
                 <div class="flex flex-grow sm:flex-grow-0">
                     <x-button primary sm flat wire:click="defaults" icon="arrow-path" label="Reset" />
                 </div>
             @endunless
             <div class="flex flex-grow sm:flex-grow-0">
-                <x-native-select 
-                    wire:model.live="poll"
-                    :options="$polls" 
-                    option-label="name" 
-                    option-value="value" />
+                <x-native-select wire:model.live="season" :options="$seasons" option-label="name" option-value="value" />
             </div>
             <div class="flex flex-grow sm:flex-grow-0">
-                <x-native-select 
-                    wire:model.live="week"
-                    :options="$weeks" 
-                    option-label="name" 
-                    option-value="value" />
+                <x-native-select wire:model.live="poll" :options="$polls" option-label="name" option-value="value" />
+            </div>
+            <div class="flex flex-grow sm:flex-grow-0">
+                <x-native-select wire:model.live="week" :options="$weeks" option-label="name" option-value="value" />
             </div>
         </div>
 
@@ -65,7 +61,6 @@
         <div class="mb-6 bg-white rounded-md shadow-md divide-y divide-gray-200">
 
             @foreach ($ranks as $rank)
-
                 <div class="flex items-center px-4 space-x-4 justify-between text-sm p-1.5">
 
                     <!-- Maatchup Flex -->
@@ -81,12 +76,12 @@
                     </div>
 
                     <div class="flex items-center space-x-1 w-1/6 justify-center font-semibold">
-                        @if(strlen($rank['trend']) > 1 && substr($rank['trend'],0,1) == '+')
-                            <x-bi-arrow-up-short class="w-4 h-4 text-green-600"/>
-                            <span class="text-green-600">{{ substr($rank['trend'],1) }}</span>
-                        @elseif(strlen($rank['trend']) > 1 && substr($rank['trend'],0,1) == '-')
-                            <x-bi-arrow-down-short class="w-4 h-4 text-red-600"/>
-                            <span class="text-red-600">{{ substr($rank['trend'],1) }}</span>
+                        @if (strlen($rank['trend']) > 1 && substr($rank['trend'], 0, 1) == '+')
+                            <x-bi-arrow-up-short class="w-4 h-4 text-green-600" />
+                            <span class="text-green-600">{{ substr($rank['trend'], 1) }}</span>
+                        @elseif(strlen($rank['trend']) > 1 && substr($rank['trend'], 0, 1) == '-')
+                            <x-bi-arrow-down-short class="w-4 h-4 text-red-600" />
+                            <span class="text-red-600">{{ substr($rank['trend'], 1) }}</span>
                         @else
                             <span class="text-gray-600">{{ $rank['trend'] }}</span>
                         @endif
@@ -98,7 +93,6 @@
                         {{ $rank['votes'] }}
                     </div>
                 </div>
-
             @endforeach
 
         </div>

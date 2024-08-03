@@ -23,6 +23,8 @@ class CreateRankingsTable extends Migration
             $table->uuid('calendar_id');
             $table->uuid('week_id');
 
+            $table->string('headline', 50);
+
             $table->unsignedMediumInteger('team_id');
 
             $table->unsignedTinyInteger('rank');
