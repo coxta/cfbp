@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('calendars', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedTinyInteger('espn_id')->unique();
+            $table->unsignedTinyInteger('espn_id');
             $table->string('name');
             $table->unsignedSmallInteger('year');
             $table->timestamp('start_date');

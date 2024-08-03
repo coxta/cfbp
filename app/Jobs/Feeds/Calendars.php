@@ -59,10 +59,12 @@ class Calendars implements ShouldQueue
             $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $end);
 
             $calendar = Calendar::updateOrCreate(
-                ['espn_id' => $cal['value']],
+                [
+                    'espn_id' => $cal['value'],
+                    'year' => $year,
+                ],
                 [
                     'name' => $cal['label'],
-                    'year' => $year,
                     'start_date' => $start_date,
                     'end_date' => $end_date
                 ]
