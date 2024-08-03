@@ -5,6 +5,7 @@ namespace App\Models\Traits;
 use App\Models\Game;
 use App\Models\Week;
 use App\Models\Calendar;
+use App\Models\Ranking;
 use Illuminate\Support\Facades\Cache;
 
 trait WeekTrait
@@ -20,7 +21,11 @@ trait WeekTrait
         return Cache::remember('week:current', now()->addHours(12), function () {
             return Week::where('start_date', '<=', now())->where('end_date', '>=', now())->first();
         });
+    }
 
+    public function rankings()
+    {
+        return $this->hasMany(Ranking::class)->orderBy('poll')->orderBy('rank');
     }
 
     public function games()
@@ -31,8 +36,8 @@ trait WeekTrait
     public function myGames()
     {
         return $this->hasMany(Game::class)
-                    ->whereIn('away_team', auth()->user()->teams ?? [])
-                    ->orWhereIn('home_team', auth()->user()->teams ?? [])
-                    ->orderBy('start_date');
+            ->whereIn('away_team', auth()->user()->teams ?? [])
+            ->orWhereIn('home_team', auth()->user()->teams ?? [])
+            ->orderBy('start_date');
     }
 }
