@@ -20,7 +20,7 @@ use App\Livewire\ViewArticle;
 use App\Livewire\UserTable;
 
 // Autenticated user must be verified
-Route::middleware(['verified'])->group(function () {
+Route::middleware(['verified', 'geo'])->group(function () {
 
     Route::get('/', function () {
         return view('home');
@@ -46,7 +46,7 @@ Route::middleware(['verified'])->group(function () {
 });
 
 // Admin Only Routes
-Route::middleware(['admin','verified'])->group(function () {
+Route::middleware(['admin', 'verified'])->group(function () {
     Route::get('/feeds', Feeds::class)->name('feeds');
     Route::get('/feeds/{feed}', ShowFeed::class)->name('feed');
     Route::get('/feeds/{feed}/run', [FeedController::class, 'run'])->name('feed-run');
@@ -55,11 +55,10 @@ Route::middleware(['admin','verified'])->group(function () {
     Route::group(['background' => 'bg-white'], function () {
         Route::get('/users', UserTable::class)->name('users');
     });
-
 });
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
