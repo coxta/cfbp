@@ -6,6 +6,6 @@
             <x-button wire:click="toggle" spinner="toggle" label="Follow" icon="plus" primary />
         @endif
     @else
-        <x-button href="{{ route('login') }}" label="Follow" icon="plus" primary />
+        <x-button wire:click="auth" label="Follow" icon="plus" primary />
     @endauth
 </span>

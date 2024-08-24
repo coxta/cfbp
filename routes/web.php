@@ -20,7 +20,7 @@ use App\Livewire\ViewArticle;
 use App\Livewire\UserTable;
 
 // Autenticated user must be verified
-Route::middleware(['verified', 'geo'])->group(function () {
+Route::middleware(['verified', 'geo', 'pending-follows'])->group(function () {
 
     Route::get('/', function () {
         return view('home');

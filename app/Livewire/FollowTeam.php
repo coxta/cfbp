@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Facades\Session;
 
 class FollowTeam extends Component
 {
@@ -12,13 +13,26 @@ class FollowTeam extends Component
 
     public function mount($team)
     {
+
         $this->team = $team;
-        $this->following = in_array($this->team, auth()->user()->teams ?? []);
+
+        if (auth()->check() && Session::has('pending-team-follow')) {
+            $this->toggle();
+            Session::forget('pending-team-follow');
+        } else {
+            $this->following = in_array($this->team, auth()->user()->teams ?? []);
+        }
     }
 
     public function render()
     {
         return view('livewire.follow-team');
+    }
+
+    public function auth()
+    {
+        Session::put('pending-team-follow', $this->team);
+        return redirect()->route('login');
     }
 
     public function toggle()
@@ -41,6 +55,5 @@ class FollowTeam extends Component
         $user->save();
 
         $this->following = (bool) !$this->following;
-
     }
 }
