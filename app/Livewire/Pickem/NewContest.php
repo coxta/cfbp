@@ -15,7 +15,8 @@ class NewContest extends Component
     public Week $week;
     public $typeOptions;
 
-    public function rules() {
+    public function rules()
+    {
         return [
             'contest.type_id' => 'required|string|min:36|max:36',
             'contest.group_id' => 'required|string|min:36|max:36',
@@ -25,7 +26,7 @@ class NewContest extends Component
 
     public function mount(Group $group = null)
     {
-        $this->group = $group ?? Group::where('name','Master')->oldest()->first()->id;
+        $this->group = $group ?? Group::where('name', 'Master')->oldest()->first()->id;
         $this->week = Week::current();
         $this->fresh();
     }
@@ -61,7 +62,7 @@ class NewContest extends Component
 
         // Set a default type
         foreach ($this->typeOptions as $type) {
-            if($type['name'] == 'Spreads') {
+            if ($type['name'] == 'Spreads') {
                 $this->contest->type_id = $type['value'];
             }
         }
@@ -74,6 +75,5 @@ class NewContest extends Component
 
         // Set the status
         $this->contest->status = 'Created';
-
     }
 }

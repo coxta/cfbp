@@ -2,8 +2,10 @@
 <div class="flex flex-col rounded-lg shadow overflow-hidden">
 
     <div class="flex-shrink-0">
-        @if(isset($venue['images'][1]) || isset($venue['images'][0]))
-            <img class="w-full object-cover object-top h-40" src="{{ isset($venue['images'][1]) ? $venue['images'][1]['href'] : $venue['images'][0]['href'] }}" alt="">
+        @if (isset($venue['images'][1]) || isset($venue['images'][0]))
+            <img class="w-full object-cover object-top h-40"
+                src="{{ isset($venue['images'][1]) ? $venue['images'][1]['href'] : $venue['images'][0]['href'] }}"
+                alt="">
         @else
             <img class="w-full object-cover object-top h-40" src="{{ secure_asset('img/pick.svg') }}" alt="">
         @endif
@@ -13,20 +15,22 @@
             {{ $venue['fullName'] }}
         </h2>
         <div class="flex flex-row items-center space-x-2 my-1">
-            <img src="{{ secure_asset('img/location.svg') }}" class="h-4"/>
+            <img src="{{ secure_asset('img/location.svg') }}" class="h-4" />
             <div class="text-sm font-normal text-gray-900">
                 {{ $venue['address']['city'] . ', ' . $venue['address']['state'] }}
             </div>
         </div>
         <div class="flex flex-row items-center my-1">
             <div class="flex flex-row items-center space-x-2 w-1/2">
-                <img src="{{ secure_asset('img/fans.svg') }}" class="h-4"/>
-                <div class="text-sm font-normal text-gray-900">
-                    {{ number_format($venue['capacity']) }}
-                </div>
+                <img src="{{ secure_asset('img/fans.svg') }}" class="h-4" />
+                @if (isset($venue['capacity']))
+                    <div class="text-sm font-normal text-gray-900">
+                        {{ number_format($venue['capacity']) }}
+                    </div>
+                @endif
             </div>
             <div class="flex flex-row items-center space-x-1 w-1/2">
-                <img src="{{ secure_asset('img/grass.svg') }}" class="h-4"/>
+                <img src="{{ secure_asset('img/grass.svg') }}" class="h-4" />
                 <div class="text-sm font-normal text-gray-900">
                     {{ $venue['grass'] ? 'Grass' : 'Artificial' }}
                 </div>

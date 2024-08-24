@@ -12,10 +12,10 @@
                     @endif
                     @if (($game->completed && $game->away_score < $game->home_score) || $game->away_team == 0)
                         <a href="{{ route('team', ['team' => $game->awayTeam->id]) }}"
-                            class="text-gray-400 hover:text-blue-600 font-bold text-lg">{{ $game->awayTeam->location }}</a>
+                            class="text-gray-400 hover:text-blue-600 font-semibold">{{ $game->awayTeam->short_display_name }}</a>
                     @else
                         <a href="{{ route('team', ['team' => $game->awayTeam->id]) }}"
-                            class="text-gray-700 hover:text-blue-600 font-bold text-lg">{{ $game->awayTeam->location }}</a>
+                            class="text-gray-700 hover:text-blue-600 font-semibold">{{ $game->awayTeam->short_display_name }}</a>
                     @endif
                 </div>
 

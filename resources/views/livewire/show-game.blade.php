@@ -1,4 +1,4 @@
-<div @if(in_array($game->status_desc, ['In Progress','End of Period','Halftime'])) wire:poll.15s @endif>
+<div @if (in_array($game->status_desc, ['In Progress', 'End of Period', 'Halftime'])) wire:poll.15s @endif>
 
     @slot('title')
         {{ $game->short_name }}
@@ -13,8 +13,8 @@
 
         <div class="flex flex-col gap-2 order-3 lg:order-2 lg:col-span-6">
 
-            @unless($game->status_desc == 'Scheduled')
-                <x-game-summary.playcast :drives="$summary['drives']" :scoring="$summary['scoring']" :home="$game->homeTeam" :away="$game->awayTeam"/>
+            @unless ($game->status_desc == 'Scheduled')
+                <x-game-summary.playcast :drives="$summary['drives']" :scoring="$summary['scoring']" :home="$game->homeTeam" :away="$game->awayTeam" />
             @endunless
 
             <x-game-summary.game-articles :article="$summary['article']" :stories="$summary['news']" />
@@ -24,13 +24,16 @@
         <div class="flex flex-col gap-2 order-1 lg:col-span-3">
 
             <x-game-summary.venue :venue="$summary['venue']" />
-
-            @if($game->status_desc == 'Scheduled')
-                <x-game-summary.prediction wire:ignore :game="$summary['prediction']" />
+            @if ($game->status_desc == 'Scheduled')
+                @if (isset($summary['prediction']) && !empty($summary['prediction']))
+                    <x-game-summary.prediction wire:ignore :game="$summary['prediction']" />
+                @endif
                 <x-game-summary.playmakers :game="$summary['leaders']" />
             @else
                 <x-game-summary.playmakers :game="$summary['leaders']" />
-                <x-game-summary.prediction wire:ignore :game="$summary['prediction']" />
+                @if (isset($summary['prediction']) && !empty($summary['prediction']))
+                    <x-game-summary.prediction wire:ignore :game="$summary['prediction']" />
+                @endif
             @endif
 
             <x-game-summary.probability :game="$summary['probability']" />
@@ -48,7 +51,7 @@
             <x-game-summary.team-stats :game="$summary['boxscore']" />
 
         </div>
-        
+
     </div>
 
 </div>

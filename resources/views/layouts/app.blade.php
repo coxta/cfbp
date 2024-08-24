@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html class="h-full {{ request()->route()->action['background'] ?? 'bg-gray-100' }}" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-full {{ request()->route()->action['background'] ?? 'bg-gray-100' }}"
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -20,18 +21,19 @@
     <link rel="shortcut icon" href="{{ asset('img/logo.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
 
-    <!-- Scripts -->
-    <wireui:scripts />
+    @wireUiScripts
+    <script src="//unpkg.com/alpinejs" defer></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
 </head>
 
 <body class="h-full">
-    
+
     <div class="min-h-screen">
 
         @include('layouts.shell')
@@ -42,7 +44,7 @@
     <x-dialog z-index="z-50" blur="md" align="center" />
 
     @livewireScripts
-    
+
 </body>
 
 </html>
