@@ -52,7 +52,6 @@ class ShowTeam extends Component
     public function loadNews()
     {
         $response = Http::get(config('espn.team-news') . $this->team->id);
-        dd($response->json());
         $this->articles = $response->json()['articles'];
     }
 
