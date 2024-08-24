@@ -23,12 +23,14 @@
 
             <!-- Email Address -->
             <div>
-                <x-input label="Email" id="email" placeholder="Your email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus/>
+                <x-input label="Email" id="email" placeholder="Your email" class="block mt-1 w-full" type="email"
+                    name="email" :value="old('email')" required autofocus />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
-                <x-input label="Password" id="password" type="password" name="password" placeholder="Your password" class="block mt-1 w-full" required/>
+                <x-input label="Password" id="password" type="password" name="password" placeholder="Your password"
+                    class="block mt-1 w-full" required />
                 {{-- <x-password id="password" name="password" type="password" placeholder="Your password" class="block mt-1 w-full" label="Password" required autocomplete="current-password"/> --}}
             </div>
 
@@ -39,12 +41,23 @@
 
             <div class="flex items-center justify-between mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900"
+                        href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
-                <x-button type="submit" label="Log In" primary/>
+                <x-button type="submit" label="Log In" primary />
             </div>
+
+            <div class="flex items-center space-x-4 mt-4 text-sm text-gray-500">
+
+                <span>Don't have an account?</span>
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
+                    {{ __('Sign Up') }}
+                </a>
+
+            </div>
+
         </form>
     </x-auth-card>
 </x-guest-layout>

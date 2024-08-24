@@ -55,5 +55,7 @@ class FollowTeam extends Component
         $user->save();
 
         $this->following = (bool) !$this->following;
+
+        $this->dispatch('favorites-updated');
     }
 }
