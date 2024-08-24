@@ -9,21 +9,17 @@ use Livewire\Attributes\On;
 class UserFavorites extends Component
 {
 
-    public $teams = [];
-
-    public function mount()
-    {
-        $this->loadTeams();
-    }
-
     public function render()
     {
-        return view('livewire.user-favorites');
+        $teams = auth()->check() ? User::find(auth()->id())->favorites() : null;
+        return view('livewire.user-favorites', [
+            'teams' => $teams
+        ]);
     }
 
     #[On('favorites-updated')]
-    public function loadTeams()
+    public function favorites()
     {
-        $this->teams = auth()->check() ? User::find(auth()->id())->favorites()->toArray() : [];
+        // refresh via re-render
     }
 }
