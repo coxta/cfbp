@@ -14,21 +14,28 @@
         <h2 class="text-base font-bold">
             {{ $venue['fullName'] }}
         </h2>
-        <div class="flex flex-row items-center space-x-2 my-1">
-            <img src="{{ secure_asset('img/location.svg') }}" class="h-4" />
-            <div class="text-sm font-normal text-gray-900">
-                {{ $venue['address']['city'] . ', ' . $venue['address']['state'] }}
+
+        @if (isset($venue['address']['city']))
+            <div class="flex flex-row items-center space-x-2 my-1">
+                <img src="{{ secure_asset('img/location.svg') }}" class="h-4" />
+                <div class="text-sm font-normal text-gray-900">
+                    {{ $venue['address']['city'] }}
+                    @if (isset($venue['address']['state']))
+                        {{ ', ' . $venue['address']['state'] }}
+                    @endif
+                </div>
             </div>
-        </div>
+        @endif
+
         <div class="flex flex-row items-center my-1">
-            <div class="flex flex-row items-center space-x-2 w-1/2">
-                <img src="{{ secure_asset('img/fans.svg') }}" class="h-4" />
-                @if (isset($venue['capacity']))
-                    <div class="text-sm font-normal text-gray-900">
-                        {{ number_format($venue['capacity']) }}
-                    </div>
-                @endif
-            </div>
+            @if (isset($venue['capacity']))
+                <div class="flex flex-row items-center space-x-2 w-1/2">
+                    <img src="{{ secure_asset('img/fans.svg') }}" class="h-4" />\
+                        <div class="text-sm font-normal text-gray-900">
+                            {{ number_format($venue['capacity']) }}
+                        </div>
+                </div>
+            @endif
             <div class="flex flex-row items-center space-x-1 w-1/2">
                 <img src="{{ secure_asset('img/grass.svg') }}" class="h-4" />
                 <div class="text-sm font-normal text-gray-900">
