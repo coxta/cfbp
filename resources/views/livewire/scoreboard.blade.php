@@ -153,7 +153,7 @@
 
         @foreach ($dates as $date)
             <div class="flex items-center my-3 space-x-4">
-                <div class="border-b border-blue-600 flex-grow"></div>
+                {{-- <div class="border-b border-blue-600 flex-grow"></div> --}}
                 <div class="text-blue-600 font-normal"> {{ $date['display_date'] }}</div>
                 <div class="border-b border-blue-600 flex-grow"></div>
             </div>
@@ -172,7 +172,14 @@
                             <div
                                 class="{{ $game->status_desc == 'Scheduled' ? 'w-2/3 border-r' : 'w-full md:border-r' }} border-gray-200 md:w-1/3 pl-2 pr-4 space-y-2">
                                 <div class="flex items-baseline justify-between">
-                                    <p class="text-xs text-gray-500 font-semibold">{{ $game->status_detail_short }}</p>
+                                    <p class="text-xs text-gray-500 font-semibold">
+                                        @if ($game->status_desc == 'Scheduled')
+                                            {{ $game->time }}
+                                        @else
+                                            {{ $game->status_detail_short }}
+                                        @endif
+                                    </p>
+
                                     @unless ($game->completed)
                                         <x-game.network :game="$game" />
                                     @endunless

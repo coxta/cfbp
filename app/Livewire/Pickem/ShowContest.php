@@ -2,15 +2,16 @@
 
 namespace App\Livewire\Pickem;
 
-use Livewire\Component;
-use WireUi\Traits\WireUiActions;
 use Carbon\Carbon;
+use App\Models\Game;
+use App\Models\Week;
 
 use App\Models\Contest;
-use App\Models\Week;
-use App\Models\Game;
-use App\Models\Conference;
+use Livewire\Component;
 use App\Models\Selection;
+use App\Models\Conference;
+use WireUi\Traits\WireUiActions;
+use Illuminate\Support\Facades\Session;
 
 class ShowContest extends Component
 {
@@ -20,7 +21,7 @@ class ShowContest extends Component
     public Contest $contest;
 
     public $conference = 'top';
-    public $conferences = [];    
+    public $conferences = [];
 
     public function mount(Contest $contest)
     {
@@ -59,7 +60,7 @@ class ShowContest extends Component
 
         foreach ($data->games as $game) {
 
-            $date = Carbon::parse($game->start_date)->setTimezone('America/New_York');
+            $date = Carbon::parse($game->start_date)->setTimezone(Session::get('geo.timezone', 'America/New_York'));
             $key = $date->toDateString();
 
             if ($this->conference == 'top' && ($game->home_rank <= 25 || $game->away_rank <= 25)) {
@@ -73,9 +74,9 @@ class ShowContest extends Component
                 }
             } else if (
                 $this->conference == 'all'
-                || ( $game->awayConference && $game->awayConference->id == $this->conference )
-                || ( $game->homeConference && $game->homeConference->id == $this->conference )
-                ) {
+                || ($game->awayConference && $game->awayConference->id == $this->conference)
+                || ($game->homeConference && $game->homeConference->id == $this->conference)
+            ) {
 
                 if (isset($dates[$key])) {
                     array_push($dates[$key]['games'], $game);
@@ -165,5 +166,4 @@ class ShowContest extends Component
     {
         $this->contest->refresh();
     }
-
 }

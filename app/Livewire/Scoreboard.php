@@ -3,11 +3,12 @@
 namespace App\Livewire;
 
 use Carbon\Carbon;
-use Livewire\Component;
-use Livewire\Attributes\Url;
-
 use App\Models\Week;
+use Livewire\Component;
+
 use App\Models\Conference;
+use Livewire\Attributes\Url;
+use Illuminate\Support\Facades\Session;
 
 class Scoreboard extends Component
 {
@@ -58,7 +59,7 @@ class Scoreboard extends Component
 
         foreach ($data->games as $game) {
 
-            $date = Carbon::parse($game->start_date)->setTimezone('America/New_York');
+            $date = Carbon::parse($game->start_date)->setTimezone(Session::get('geo.timezone', 'America/New_York'));
             $key = $date->toDateString();
 
             if ($this->conference == 'top' && ($game->home_rank <= 25 || $game->away_rank <= 25)) {

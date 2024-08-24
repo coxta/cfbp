@@ -1,5 +1,5 @@
 @php
-use Carbon\Carbon;
+    use Carbon\Carbon;
 @endphp
 
 <div x-data="{ editing: @entangle('editing').live }" x-cloak>
@@ -19,7 +19,7 @@ use Carbon\Carbon;
         <div
             class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
             <x-button primary outline wire:click="$toggle('editing')" label="{{ $editing ? 'Cancel' : 'Edit' }}" />
-            @unless($editing)
+            @unless ($editing)
                 <x-button primary wire:click="run" label="Run" />
             @endunless
         </div>
@@ -31,7 +31,8 @@ use Carbon\Carbon;
         <div class="mt-4">
 
             <x-input wire:model.blur="feed.name" label="Name" placeholder="Scoreboard" />
-            <x-input wire:model.blur="feed.description" label="Description" placeholder="Polls the ESPN Scoreboard API for updates" />
+            <x-input wire:model.blur="feed.description" label="Description"
+                placeholder="Polls the ESPN Scoreboard API for updates" />
             <x-input wire:model.blur="feed.job" label="Job" placeholder="App\Jobs\Feeds\Scoreboard" />
             <x-input wire:model.blur="feed.frequency" label="Frequency" placeholder="Every 5 Minutes" />
 
@@ -74,21 +75,19 @@ use Carbon\Carbon;
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($logs as $log)
-
-
-
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                       {{ $log->job_id ?? $log->id }}
+                                        {{ $log->job_id ?? $log->id }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ Carbon::parse($log->created_at)->setTimezone('America/New_York')->format('M jS, g:i:s a') }}
+                                        {{ Carbon::parse($log->created_at)->setTimezone(session()->get('geo.timezone', 'America/New_York'))->format('M jS, g:i:s a') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ Carbon::parse($log->started_at)->setTimezone('America/New_York')->format('M jS, g:i:s a') }}
+                                        {{ Carbon::parse($log->started_at)->setTimezone(session()->get('geo.timezone', 'America/New_York'))->format('M jS, g:i:s a') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $log->disposition }}<span class="text-xs text-gray-500 font-semibold ml-2">{{ $log->duration }}</span>
+                                        {{ $log->disposition }}<span
+                                            class="text-xs text-gray-500 font-semibold ml-2">{{ $log->duration }}</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $log->exception ?? ($log->disposition == 'Complete' ? 'Success' : '-') }}
