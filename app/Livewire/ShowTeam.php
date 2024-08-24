@@ -52,27 +52,24 @@ class ShowTeam extends Component
     public function loadNews()
     {
         $response = Http::get(config('espn.team-news') . $this->team->id);
+        dd($response->json());
         $this->articles = $response->json()['articles'];
     }
 
     public function cleanStats()
     {
 
-        if($this->team->stats && count($this->team->stats) > 0) {
+        if ($this->team->stats && count($this->team->stats) > 0) {
 
             foreach ($this->team->stats as $stat) {
 
-                if(in_array($stat['name'], $this->relativeStats)) {
+                if (in_array($stat['name'], $this->relativeStats)) {
                     array_push($this->stats, [
                         'label' => $this->statLabels[$stat['name']],
-                        'value' => round($stat['value'],2)
+                        'value' => round($stat['value'], 2)
                     ]);
                 }
-
             }
-
         }
-
     }
-
 }
