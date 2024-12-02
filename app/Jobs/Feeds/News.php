@@ -30,9 +30,7 @@ class News implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Execute the job.
@@ -50,7 +48,7 @@ class News implements ShouldQueue
 
         foreach ($articles as $a) {
 
-            if (isset($a['links']['api']['news']['href']) && in_array($a['type'], ['Preview', 'HeadlineNews', 'Story'])) {
+            if ((isset($a['links']['api']['news']['href']) || isset($a["links"]["api"]["self"]["href"])) && in_array($a['type'], ['Preview', 'HeadlineNews', 'Story'])) {
 
                 if (isset($a['images'])) {
                     if ($a['type'] == 'HeadlineNews' || $a['type'] == 'Story') {
@@ -64,7 +62,9 @@ class News implements ShouldQueue
                     }
                 }
 
-                $article = Http::get($a['links']['api']['news']['href'])->json();
+                $articleUrl = isset($a['links']['api']['news']['href']) ? $a['links']['api']['news']['href'] : $a['links']['api']['self']['href'];
+
+                $article = Http::get($articleUrl)->json();
 
                 if (isset($article['headlines'])) {
 
@@ -88,18 +88,17 @@ class News implements ShouldQueue
                     );
                 }
             }
-            
         }
 
         // Iterate the Top 25 for some extra team news and previews
         $top25 = Ranking::select('team_id')
-                    ->where('poll', 'ap')
-                    ->latest('created_at')
-                    ->limit(50)
-                    ->pluck('team_id')
-                    ->unique();
+            ->where('poll', 'ap')
+            ->latest('created_at')
+            ->limit(50)
+            ->pluck('team_id')
+            ->unique();
 
-        foreach($top25 as $team) {
+        foreach ($top25 as $team) {
 
             try {
 
@@ -146,17 +145,12 @@ class News implements ShouldQueue
                             );
                         }
                     }
-                    
                 }
-
             } catch (Exception $e) {
                 //throw $th;
             }
-
         }
 
         FeedController::finished($this->log);
-
     }
-
 }
