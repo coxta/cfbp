@@ -5,7 +5,7 @@ return [
     /**
      * Current Season
      */
-    'season' => env('SEASON', 2024),
+    'season' => env('SEASON', date("Y")),
 
     /**
      * API Endpoints
